@@ -1,0 +1,123 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    tools:context="scot.mclarentech.magicmirror.FullscreenActivity">
+
+    <!-- The primary full-screen view. This can be replaced with whatever view
+         is needed to present your content, e.g. VideoView, SurfaceView,
+         TextureView, etc. -->
+
+    <TextView
+        android:id="@+id/fullscreen_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:keepScreenOn="true"
+        android:text="@string/dummy_content"
+        android:textColor="#ffffff"
+        android:textSize="50sp"
+        tools:background="@android:color/black" />
+
+    <!-- This FrameLayout insets its children based on system windows using
+         android:fitsSystemWindows. -->
+
+    <TextClock
+        android:id="@+id/textClock"
+
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:format12Hour="E, dd MMM"
+        android:format24Hour="E, dd MMM"
+        android:textAlignment="viewStart"
+        android:textColor="@android:color/white"
+        android:textSize="36sp" />
+
+    <TextClock
+        android:id="@+id/textClock3"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+
+        android:format12Hour="h:mm a"
+        android:format24Hour="H:mm"
+        android:textAlignment="textEnd"
+        android:textColor="@android:color/white"
+        android:textSize="36sp" />
+
+    <TextView
+        android:id="@+id/textViewWeather"
+        android:layout_width="200dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="175dp"
+        android:layout_gravity="left"
+        android:text=""
+        android:textColor="@android:color/white" />
+
+    <!--WebView
+        android:id="@+id/WebViewRight"
+        android:layout_width="200dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:layout_marginTop="60dp"
+        android:visibility="invisible" /-->
+
+    <ListView
+        android:id="@+id/ListViewRight"
+        android:layout_width="400dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:layout_marginTop="60dp" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="200dp"
+        android:layout_height="75dp"
+        android:layout_gravity="left"
+        android:layout_marginTop="54dp"
+        android:clickable="true"
+        android:scaleType="fitStart"
+        android:foregroundGravity="left" />
+
+    <TextView
+        android:id="@+id/textViewLocation"
+        android:layout_marginTop="129dp"
+        android:layout_width="150dp"
+        android:layout_height="46dp"
+        android:text="TextView"
+        android:textColor="@android:color/white" />
+
+    <TextView
+        android:id="@+id/textViewIcon"
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft="100dp"
+        android:layout_width="444dp"
+        android:layout_height="154dp"
+        android:text="TextView with Icon"
+        android:textColor="@android:color/white"
+        android:textSize="32dp"
+        tools:drawableLeft="@drawable/clear_day" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        android:fitsSystemWindows="true"
+        android:foregroundGravity="left"
+        android:longClickable="true"
+        tools:textAlignment="viewStart">
+
+        <LinearLayout
+            android:id="@+id/fullscreen_content_controls"
+            style="?metaButtonBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:background="@color/black_overlay"
+            android:orientation="horizontal"
+            tools:ignore="UselessParent"></LinearLayout>
+
+
+    </FrameLayout>
+
+</FrameLayout>
