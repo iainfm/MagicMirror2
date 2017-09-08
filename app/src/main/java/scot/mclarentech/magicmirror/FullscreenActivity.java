@@ -14,6 +14,9 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.text.SpannableString;
+import android.text.TextUtils;
+import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -49,6 +52,8 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 import static android.text.Html.FROM_HTML_MODE_COMPACT;
+import static android.text.Spanned.SPAN_INCLUSIVE_INCLUSIVE;
+import static android.view.Gravity.CENTER;
 import static scot.mclarentech.magicmirror.R.layout.activity_fullscreen;
 
 /**
@@ -63,6 +68,9 @@ public class FullscreenActivity extends AppCompatActivity {
     private static final boolean AUTO_HIDE = true;
     public static ListView m_listview;
     public static Activity myThis;
+    public static TextView textViewIcon;
+    public static TextView textViewWeather;
+    public static TextView textViewLocation;
     /**
      * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
      * user interaction before hiding the system UI.
@@ -137,6 +145,10 @@ public class FullscreenActivity extends AppCompatActivity {
         mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = findViewById(R.id.fullscreen_content);
         m_listview = (ListView) findViewById(R.id.ListViewRight);
+        textViewWeather = (TextView) findViewById(R.id.textViewWeather);
+        textViewIcon = (TextView) findViewById(R.id.textViewIcon);
+        textViewLocation = (TextView) findViewById(R.id.textViewLocation);
+
         myThis = this;
 
         // Set up the user interaction to manually show or hide the system UI.
@@ -242,7 +254,7 @@ public class FullscreenActivity extends AppCompatActivity {
     }
 
     private void clearWeather() {
-        TextView textViewWeather = (TextView) findViewById(R.id.textViewWeather);
+        // TextView textViewWeather = (TextView) findViewById(R.id.textViewWeather);
         textViewWeather.setText("");
 
         ImageView imageView3 = (ImageView) findViewById(R.id.imageView3);
@@ -251,15 +263,20 @@ public class FullscreenActivity extends AppCompatActivity {
         int resID = res.getIdentifier("" , "drawable", getPackageName());
         imageView3.setImageResource(resID);
 
-        TextView textViewLocation = (TextView) findViewById(R.id.textViewLocation);
+
         textViewLocation.setText("");
+
+        // TextView textViewIcon = (TextView) findViewById(R.id.textViewIcon);
+
+        // textViewIcon.setText("");
     }
 
     private void updateWeather(){
+        // TextView textViewIcon = (TextView) findViewById(R.id.textViewIcon);
         RequestBuilder weather = new RequestBuilder();
-
         Request request = new Request();
-        String[] latLong = getLocation().split(",");
+        final String[] latLong = getLocation().split(",");
+
         request.setLat(latLong[0]);
         request.setLng(latLong[1]);
         // request.setLat("55.944541");
@@ -281,15 +298,31 @@ public class FullscreenActivity extends AppCompatActivity {
                 Log.d("******WEATHER*******", "Hourly Sum: " + weatherResponse.getHourly().getSummary()); */
                 String displayWeather = "";
                 String icon_name = "";
-                String temperature = "";
+
+
+                //textViewIcon.setText("15");
 
                 if (weatherResponse.getCurrently() != null) {
+                    String temp = String.format("%.0f",weatherResponse.getCurrently().getTemperature()) +
+                            "\u00B0C\n\n";
+                    String loc = latLong[2] + ", " + latLong[3];
+
+                    SpannableString temp_span =  new SpannableString(temp);
+                    SpannableString loc_span = new SpannableString(loc);
+
+                    temp_span.setSpan(new RelativeSizeSpan(1f), 0, temp.length(), SPAN_INCLUSIVE_INCLUSIVE);
+                    loc_span.setSpan(new RelativeSizeSpan(0.5f), 0, loc.length(), SPAN_INCLUSIVE_INCLUSIVE);
+
+                    CharSequence temp_loc = TextUtils.concat(temp_span, loc_span);
+
+                    textViewIcon.setText(temp_loc);
+                    // textViewIcon.setCompoundDrawablesWithIntrinsicBounds(R.drawable.clear_day, 0, 0, 0);
+                    textViewIcon.setGravity(CENTER);
+
                     displayWeather = weatherResponse.getCurrently().getSummary() +
                             ", " + String.format("%.0f",weatherResponse.getCurrently().getTemperature()) +
                             "\u00B0C\n\n";
-                    if (icon_name == "") {
-                        icon_name = weatherResponse.getCurrently().getIcon().replace("-", "_");
-                    }
+
                 }
 
                 if (weatherResponse.getMinutely() != null) {
@@ -317,12 +350,13 @@ public class FullscreenActivity extends AppCompatActivity {
                 Resources res = getResources();
                 int resID = res.getIdentifier(icon_name , "drawable", getPackageName());
                 imageView3.setImageResource(resID);
+                textViewIcon.setCompoundDrawablesWithIntrinsicBounds(resID, 0, 0, 0);
             }
 
             @Override
             public void failure(RetrofitError retrofitError) {
                 Log.d("******WEATHER*******", "Error while calling: " + retrofitError.getUrl());
-                TextView textViewWeather = (TextView) findViewById(R.id.textViewWeather);
+                // TextView textViewWeather = (TextView) findViewById(R.id.textViewWeather);
                 textViewWeather.setText("Error while calling: " + retrofitError.getUrl());
             }
         });
@@ -353,6 +387,8 @@ public class FullscreenActivity extends AppCompatActivity {
     private String getLocation() {
         double selectedLat = 0.0;
         double selectedLng = 0.0;
+        String selectedLoc = "";
+        String selectedCountry = "";
 
         Geocoder g = new Geocoder(this);
         List<Address> addressList = null;
@@ -368,15 +404,20 @@ public class FullscreenActivity extends AppCompatActivity {
 
         } finally {
             Address address = addressList.get(0);
-            TextView textViewLocation = (TextView) findViewById(R.id.textViewLocation);
+            // TextView textViewLocation = (TextView) findViewById(R.id.textViewLocation);
             textViewLocation.setText(address.getLocality() + ", " + address.getCountryCode());
 
             if (address.hasLatitude() && address.hasLongitude()) {
                 selectedLat = address.getLatitude();
                 selectedLng = address.getLongitude();
+                selectedLoc = address.getLocality();
+                selectedCountry = address.getCountryCode();
             }
         }
-        return String.format("%.3f", selectedLat) + "," + String.format("%.2f",selectedLng);
+        return String.format("%.3f", selectedLat) + "," +
+                String.format("%.2f",selectedLng) + "," +
+                selectedLoc + "," +
+                selectedCountry;
     }
 
     public static void updateNews(String newsXML) {
