@@ -60,11 +60,9 @@
         android:layout_height="100dp"
         android:text=""
         android:textAlignment="viewStart"
-        android:gravity="center"
-
         android:textColor="@android:color/white"
         android:textSize="32dp"
-        tools:drawableLeft="@drawable/clear_day" />
+        tools:drawableRight="@drawable/clear_day" />
 <!--        android:autoSizeTextType="uniform"-->
     <FrameLayout
         android:layout_width="match_parent"

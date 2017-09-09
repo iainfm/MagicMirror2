@@ -291,7 +291,7 @@ public class FullscreenActivity extends AppCompatActivity {
                 Log.d("****ICON****", icon_name);
                 Resources res = getResources();
                 int resID = res.getIdentifier(icon_name , "drawable", getPackageName());
-                textViewIcon.setCompoundDrawablesWithIntrinsicBounds(resID, 0, 0, 0);
+                textViewIcon.setCompoundDrawablesWithIntrinsicBounds(0, 0, resID, 0);
             }
 
             @Override
