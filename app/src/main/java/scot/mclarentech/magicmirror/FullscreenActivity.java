@@ -330,11 +330,16 @@ public class FullscreenActivity extends AppCompatActivity {
         double selectedLng = 0.0;
         String selectedLoc = "";
         String selectedCountry = "";
+        String searchRoad = "London, UK";
 
         Geocoder g = new Geocoder(this);
         List<Address> addressList = null;
+
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        String searchRoad = sharedPref.getString("example_text", "");
+        if (sharedPref.contains("example_text")) {
+            searchRoad = sharedPref.getString("example_text", "");
+        }
+
         try {
             addressList = g.getFromLocationName(searchRoad, 1);
 
