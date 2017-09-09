@@ -75,4 +75,12 @@
     <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
+
+    <string name="status_bar_clock_12hr_format"><font size="36">h:mm a\n</font><font size="18">E, dd MMM</font></string>
+    <string name="status_bar_clock_24hr_format"><font size="36">H:mm\n</font><font size="18">E, dd MMM</font></string>
+
+    <!--
+     android:format12Hour="h:mm a\nE, dd MMM"
+     android:format24Hour="H:mm\nE, dd MMM"
+ -->
 </resources>

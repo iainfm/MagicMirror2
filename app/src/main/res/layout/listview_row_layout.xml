@@ -3,29 +3,6 @@
     android:layout_width="fill_parent"
     android:layout_height="24dp"
     android:padding="2dip" >
-    <!--android:layout_height="?android:attr/listPreferredItemHeightSmall"-->
-
-    <!--ImageView
-        android:id="@+id/icon"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:layout_alignParentTop="true"
-        android:layout_marginRight="6dip"
-        android:contentDescription="TODO"
-        android:src="@drawable/favicon1" /-->
-
-    <!-- TextView
-        android:id="@+id/secondLine"
-        android:layout_width="fill_parent"
-        android:layout_height="26dip"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_toRightOf="@id/icon"
-        android:ellipsize="marquee"
-        android:maxLines="1"
-        android:text="Description"
-        android:textSize="12sp"
-        android:textColor="@android:color/white" /-->
 
     <TextView
         android:id="@+id/firstLine"
@@ -35,11 +12,10 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_alignWithParentIfMissing="true"
-        android:layout_toRightOf="@id/icon"
         android:gravity="end"
-        android:text="Example application"
+        android:text=""
         android:textColor="@android:color/white"
-        android:ellipsize="marquee"
+        android:ellipsize="start"
         android:textSize="14sp" />
-    <!--android:layout_above="@id/secondLine"-->
+
 </RelativeLayout>

@@ -5,10 +5,6 @@
     android:background="#000000"
     tools:context="scot.mclarentech.magicmirror.FullscreenActivity">
 
-    <!-- The primary full-screen view. This can be replaced with whatever view
-         is needed to present your content, e.g. VideoView, SurfaceView,
-         TextureView, etc. -->
-
     <TextView
         android:id="@+id/fullscreen_content"
         android:layout_width="match_parent"
@@ -20,66 +16,32 @@
         android:textSize="50sp"
         tools:background="@android:color/black" />
 
-    <!-- This FrameLayout insets its children based on system windows using
-         android:fitsSystemWindows. -->
-
     <TextClock
         android:id="@+id/textClock"
-
-        android:layout_width="match_parent"
-        android:layout_height="54dp"
-        android:format12Hour="h:mm a\nE, dd MMM"
-        android:format24Hour="E, dd MMM"
-        android:textAlignment="viewStart"
-        android:textColor="@android:color/white"
-        android:textSize="16sp"
-        android:visibility="invisible"/>
-
-    <TextClock
-        android:id="@+id/textClock3"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-
-        android:format12Hour="h:mm a\nE, dd MMM"
-        android:format24Hour="H:mm\nE, dd MMM"
+        android:format12Hour="@string/status_bar_clock_12hr_format"
+        android:format24Hour="@string/status_bar_clock_24hr_format"
         android:textAlignment="textEnd"
         android:textColor="@android:color/white"
-        android:textSize="36sp" />
+        android:gravity="fill_vertical"
+        />
 
     <TextView
         android:id="@+id/textViewWeather"
-        android:layout_width="200dp"
+        android:layout_width="250dp"
         android:layout_height="match_parent"
         android:layout_marginTop="100dp"
         android:layout_gravity="left"
         android:text=""
         android:textColor="@android:color/white" />
 
-    <!--WebView
-        android:id="@+id/WebViewRight"
-        android:layout_width="200dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="end"
-        android:layout_marginTop="60dp"
-        android:visibility="invisible" /-->
-
     <ListView
         android:id="@+id/ListViewRight"
-        android:layout_width="400dp"
+        android:layout_width="300dp"
         android:layout_height="match_parent"
         android:layout_gravity="end"
         android:layout_marginTop="100dp" />
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="200dp"
-        android:layout_height="75dp"
-        android:layout_gravity="left"
-        android:layout_marginTop="54dp"
-        android:clickable="true"
-        android:scaleType="fitStart"
-        android:foregroundGravity="left"
-        android:visibility="invisible"/>
 
     <TextView
         android:id="@+id/textViewLocation"
@@ -88,7 +50,7 @@
         android:layout_height="46dp"
         android:text="TextView"
         android:textColor="@android:color/white"
-        android:visibility="invisible"/>
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/textViewIcon"
@@ -96,13 +58,12 @@
         android:layout_marginLeft="0dp"
         android:layout_width="250dp"
         android:layout_height="100dp"
-        android:text="7\nTown"
+        android:text=""
         android:textAlignment="viewStart"
         android:gravity="center"
         android:autoSizeTextType="uniform"
         android:textColor="@android:color/white"
         android:textSize="32dp"
-        android:lineSpacingExtra="-20dp"
         tools:drawableLeft="@drawable/clear_day" />
 
     <FrameLayout
@@ -122,7 +83,7 @@
             android:layout_gravity="bottom|center_horizontal"
             android:background="@color/black_overlay"
             android:orientation="horizontal"
-            tools:ignore="UselessParent"></LinearLayout>
+            tools:ignore="UselessParent" />
 
 
     </FrameLayout>

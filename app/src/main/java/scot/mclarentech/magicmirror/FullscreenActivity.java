@@ -21,7 +21,6 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,31 +55,15 @@ import static android.text.Spanned.SPAN_INCLUSIVE_INCLUSIVE;
 import static android.view.Gravity.CENTER;
 import static scot.mclarentech.magicmirror.R.layout.activity_fullscreen;
 
-/**
- * An example full-screen activity that shows and hides the system UI (i.e.
- * status bar and navigation/system bar) with user interaction.
- */
 public class FullscreenActivity extends AppCompatActivity {
-    /**
-     * Whether or not the system UI should be auto-hidden after
-     * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
-     */
     private static final boolean AUTO_HIDE = true;
     public static ListView m_listview;
     public static Activity myThis;
     public static TextView textViewIcon;
     public static TextView textViewWeather;
     public static TextView textViewLocation;
-    /**
-     * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
-     * user interaction before hiding the system UI.
-     */
     private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
     private Timer autoUpdate;
-    /**
-     * Some older devices needs a small delay between UI widget updates
-     * and a change of the status and navigation bar.
-     */
     private static final int UI_ANIMATION_DELAY = 300;
     private final Handler mHideHandler = new Handler();
     private View mContentView;
@@ -88,17 +71,12 @@ public class FullscreenActivity extends AppCompatActivity {
         @SuppressLint("InlinedApi")
         @Override
         public void run() {
-            // Delayed removal of status and navigation bar
-
-            // Note that some of these constants are new as of API 16 (Jelly Bean)
-            // and API 19 (KitKat). It is safe to use them, as they are inlined
-            // at compile-time and do nothing on earlier devices.
-            mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
-                    | View.SYSTEM_UI_FLAG_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+    mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
+        | View.SYSTEM_UI_FLAG_FULLSCREEN
+        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         }
     };
     private View mControlsView;
@@ -120,11 +98,7 @@ public class FullscreenActivity extends AppCompatActivity {
             hide();
         }
     };
-    /**
-     * Touch listener to use for in-layout UI controls to delay hiding the
-     * system UI. This is to prevent the jarring behavior of controls going away
-     * while interacting with activity UI.
-     */
+
     private final View.OnTouchListener mDelayHideTouchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -162,9 +136,8 @@ public class FullscreenActivity extends AppCompatActivity {
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
-        // findViewById(R.id.imageView3).setOnTouchListener();
 
-        ImageView btn = (ImageView) findViewById(R.id.imageView3);
+        TextView btn = (TextView) findViewById(R.id.textViewIcon);
         btn.bringToFront();
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,10 +152,9 @@ public class FullscreenActivity extends AppCompatActivity {
         hide();
         doWeather();
         new getNews().execute("http://feeds.skynews.com/feeds/rss/home.xml");
-        // Log.d("***NEWS***", newsXML);
 
-        String[] values = new String[] { "FirstLine 1", "FirstLine 2" };
-        // ListView m_listview = (ListView) findViewById(R.id.ListViewRight);
+        String[] values = new String[] { "", "" }; // Probably redundant
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.listview_row_layout,
                 R.id.firstLine, values);
         m_listview.setAdapter(adapter);
@@ -191,10 +163,6 @@ public class FullscreenActivity extends AppCompatActivity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-
-        // Trigger the initial hide() shortly after the activity has been
-        // created, to briefly hint to the user that UI controls
-        // are available.
         delayedHide(100);
     }
 
@@ -232,10 +200,6 @@ public class FullscreenActivity extends AppCompatActivity {
         mHideHandler.postDelayed(mShowPart2Runnable, UI_ANIMATION_DELAY);
     }
 
-    /**
-     * Schedules a call to hide() in [delay] milliseconds, canceling any
-     * previously scheduled calls.
-     */
     private void delayedHide(int delayMillis) {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
@@ -254,57 +218,36 @@ public class FullscreenActivity extends AppCompatActivity {
     }
 
     private void clearWeather() {
-        // TextView textViewWeather = (TextView) findViewById(R.id.textViewWeather);
         textViewWeather.setText("");
-
-        ImageView imageView3 = (ImageView) findViewById(R.id.imageView3);
 
         Resources res = getResources();
         int resID = res.getIdentifier("" , "drawable", getPackageName());
-        imageView3.setImageResource(resID);
-
 
         textViewLocation.setText("");
 
-        // TextView textViewIcon = (TextView) findViewById(R.id.textViewIcon);
-
-        // textViewIcon.setText("");
     }
 
     private void updateWeather(){
-        // TextView textViewIcon = (TextView) findViewById(R.id.textViewIcon);
+
         RequestBuilder weather = new RequestBuilder();
         Request request = new Request();
         final String[] latLong = getLocation().split(",");
 
         request.setLat(latLong[0]);
         request.setLng(latLong[1]);
-        // request.setLat("55.944541");
-        // request.setLng("-4.587783");
         request.setUnits(Request.Units.UK);
         request.setLanguage(Request.Language.ENGLISH);
-        // request.addExcludeBlock(Request.Block.CURRENTLY);
-        Log.d("BLOCK", latLong[0] + ", " + latLong[1]);
+
         weather.getWeather(request, new Callback<WeatherResponse>() {
             @Override
             public void success(WeatherResponse weatherResponse, Response response) {
 
-                /* Log.d("******WEATHER*******", "Temp: " + weatherResponse.getCurrently().getTemperature());
-                Log.d("****WEATHER****", weatherResponse.getDaily().getSummary());
-                Log.d("****WEATHER****", weatherResponse.getHourly().getSummary());
-                Log.d("****WEATHER****", "Temp: " + weatherResponse.getCurrently().getTemperature());
-                Log.d("****WEATHER****", "Temp" + weatherResponse.getCurrently().getTemperature());
-                Log.d("******WEATHER*******", "Summary: " + weatherResponse.getCurrently().getSummary().toString());
-                Log.d("******WEATHER*******", "Hourly Sum: " + weatherResponse.getHourly().getSummary()); */
                 String displayWeather = "";
                 String icon_name = "";
 
-
-                //textViewIcon.setText("15");
-
                 if (weatherResponse.getCurrently() != null) {
                     String temp = String.format("%.0f",weatherResponse.getCurrently().getTemperature()) +
-                            "\u00B0C\n\n";
+                            "\u00B0C";
                     String loc = latLong[2] + ", " + latLong[3];
 
                     SpannableString temp_span =  new SpannableString(temp);
@@ -313,29 +256,29 @@ public class FullscreenActivity extends AppCompatActivity {
                     temp_span.setSpan(new RelativeSizeSpan(1f), 0, temp.length(), SPAN_INCLUSIVE_INCLUSIVE);
                     loc_span.setSpan(new RelativeSizeSpan(0.5f), 0, loc.length(), SPAN_INCLUSIVE_INCLUSIVE);
 
-                    CharSequence temp_loc = TextUtils.concat(temp_span, loc_span);
+                    CharSequence temp_loc = TextUtils.concat(temp_span, "\n", loc_span);
 
                     textViewIcon.setText(temp_loc);
-                    // textViewIcon.setCompoundDrawablesWithIntrinsicBounds(R.drawable.clear_day, 0, 0, 0);
                     textViewIcon.setGravity(CENTER);
 
-                    displayWeather = weatherResponse.getCurrently().getSummary() +
-                            ", " + String.format("%.0f",weatherResponse.getCurrently().getTemperature()) +
-                            "\u00B0C\n\n";
+                    displayWeather = ""; // weatherResponse.getCurrently().getSummary() +
+                            // ", " + String.format("%.0f",weatherResponse.getCurrently().getTemperature()) +
+                            // "\u00B0C\n\n";
 
                 }
 
                 if (weatherResponse.getMinutely() != null) {
-                    displayWeather = displayWeather + weatherResponse.getMinutely().getSummary() + "\n\n";
+                    displayWeather = displayWeather + weatherResponse.getMinutely().getSummary()
+                            .replaceAll(".$","")+ "\n\n";
                     icon_name = weatherResponse.getMinutely().getIcon().replace("-", "_");
                 }
 
                 if (weatherResponse.getHourly() != null){
-                    displayWeather = displayWeather + weatherResponse.getHourly().getSummary() + "\n\n";
+                    displayWeather = displayWeather + weatherResponse.getHourly().getSummary().replaceAll(".$","") + "\n\n";
                 }
 
                 if (weatherResponse.getDaily() != null) {
-                    displayWeather = displayWeather + weatherResponse.getDaily().getSummary();
+                    displayWeather = displayWeather + weatherResponse.getDaily().getSummary().replaceAll(".$","");
                     if (icon_name == "") {
                         icon_name = weatherResponse.getDaily().getIcon().replace("-", "_");
                     }
@@ -345,11 +288,9 @@ public class FullscreenActivity extends AppCompatActivity {
                 TextView textViewWeather = (TextView) findViewById(R.id.textViewWeather);
                 textViewWeather.setText(displayWeather);
 
-                ImageView imageView3 = (ImageView) findViewById(R.id.imageView3);
                 Log.d("****ICON****", icon_name);
                 Resources res = getResources();
                 int resID = res.getIdentifier(icon_name , "drawable", getPackageName());
-                imageView3.setImageResource(resID);
                 textViewIcon.setCompoundDrawablesWithIntrinsicBounds(resID, 0, 0, 0);
             }
 
@@ -421,8 +362,6 @@ public class FullscreenActivity extends AppCompatActivity {
     }
 
     public static void updateNews(String newsXML) {
-        // ListView m_listview = (ListView) findViewById(R.id.ListViewRight);
-
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = null;
 
@@ -438,19 +377,15 @@ public class FullscreenActivity extends AppCompatActivity {
             Element docEle = document.getDocumentElement();
             NodeList nl = docEle.getChildNodes();
 
-
-
-            // ListView m_listview = (ListView) findViewById(R.id.ListViewRight);
-            // ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.listview_row_layout,
-                    // R.id.firstLine, values);
-            // m_listview.setAdapter(adapter);
-
             if (nl != null) {
                 int length = nl.getLength();
+                int items = docEle.getElementsByTagName("item").getLength();
+                if (items > 5) { items = 5; };
+
                 for (int i = 0; i < length; i++) {
                     if (nl.item(i).getNodeType() == Node.ELEMENT_NODE) {
                         Element el = (Element) nl.item(i);
-                        for (int j =0 ; j < el.getElementsByTagName("item").getLength() ; j++) {
+                        for (int j =0 ; j < items ; j++) {
                             headlines[j] = el.getElementsByTagName("item").item(j).getChildNodes().item(1).getTextContent();
                             if (Build.VERSION.SDK_INT >= 24) {
                                 headlines[j] = Html.fromHtml(headlines[j], FROM_HTML_MODE_COMPACT).toString(); // for 24 api and more
@@ -463,8 +398,6 @@ public class FullscreenActivity extends AppCompatActivity {
                     }
                 }
 
-                // ListView m_listview = (ListView) findViewById(R.id.ListViewRight);
-                ;
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(myThis, R.layout.listview_row_layout,
                         R.id.firstLine, headlines);
                 m_listview.setAdapter(adapter);
