@@ -115,4 +115,58 @@
      android:format12Hour="h:mm a\nE, dd MMM"
      android:format24Hour="H:mm\nE, dd MMM"
  -->
+
+    <string-array name="rss_news_feeds">
+        <item>BBC News Front Page</item>
+        <item>BBC World</item>
+        <item>BBC UK</item>
+        <item>BBC England</item>
+        <item>BBC Northern Ireland</item>
+        <item>BBC Scotland</item>
+        <item>BBC Wales</item>
+        <item>BBC Business</item>
+        <item>BBC Politics</item>
+        <item>BBC Health</item>
+        <item>BBC Education</item>
+        <item>BBC Science\/Nature</item>
+        <item>BBC Technology</item>
+        <item>BBC Entertainment</item>
+        <item>BBC UK Sport</item>
+        <item>BBC International Sport</item>
+        <item>Sky News Home</item>
+        <item>Sky News UK</item>
+        <item>Sky News World</item>
+        <item>Sky News US</item>
+        <item>Sky News Business</item>
+        <item>Sky News Politics</item>
+        <item>Sky News Technology</item>
+        <item>Sky News Entertainment</item>
+        <item>Sky News Strange News</item>
+        <item></item>
+    </string-array>
+    <string-array name="rss_news_urls">
+        <item>http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/front_page/rss.xml</item>
+        <item>http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/world/rss.xml</item>
+        <item>http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/uk/rss.xml</item>
+        <item>http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/england/rss.xml</item>
+        <item>http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/wales/rss.xml</item>
+        <item>http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/business/rss.xml</item>
+        <item>http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/uk_politics/rss.xml</item>
+        <item>http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/health/rss.xml</item>
+        <item>http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/education/rss.xml</item>
+        <item>http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/sci/tech/rss.xml</item>
+        <item>http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/technology/rss.xml</item>
+        <item>http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/entertainment/rss.xml</item>
+        <item>http://feeds.bbci.co.uk/sport/rss.xml?edition=uk</item>
+        <item>http://feeds.bbci.co.uk/sport/rss.xml?edition=int</item>
+        <item>http://feeds.skynews.com/feeds/rss/home.xml</item>
+        <item>http://feeds.skynews.com/feeds/rss/uk.xml</item>
+        <item>http://feeds.skynews.com/feeds/rss/world.xml</item>
+        <item>http://feeds.skynews.com/feeds/rss/us.xml</item>
+        <item>http://feeds.skynews.com/feeds/rss/business.xml</item>
+        <item>http://feeds.skynews.com/feeds/rss/politics.xml</item>
+        <item>http://feeds.skynews.com/feeds/rss/technology.xml</item>
+        <item>http://feeds.skynews.com/feeds/rss/entertainment.xml</item>
+        <item>http://feeds.skynews.com/feeds/rss/strange.xml</item>
+    </string-array>
 </resources>

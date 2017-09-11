@@ -133,7 +133,7 @@ public class FullscreenActivity extends AppCompatActivity {
         textViewLocation = (TextView) findViewById(R.id.textViewLocation);
 
         myThis = this;
-        
+
         // Set up the user interaction to manually show or hide the system UI.
         mContentView.setOnClickListener(new View.OnClickListener() {
             @Override
