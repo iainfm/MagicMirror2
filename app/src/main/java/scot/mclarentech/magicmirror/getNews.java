@@ -2,7 +2,6 @@ package scot.mclarentech.magicmirror;
 
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -34,7 +33,6 @@ import java.net.URL;
 
                 if(responseCode == HttpURLConnection.HTTP_OK){
                     server_response = readStream(urlConnection.getInputStream());
-                    Log.d("CatalogClient", server_response);
                 }
 
             } catch (MalformedURLException e) {

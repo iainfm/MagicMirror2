@@ -13,12 +13,14 @@
     <string name="pref_title_weather_reports">Enable weather reports</string>
     <string name="pref_description_weather_reports">Display local weather reports
     </string>
+    <string name="pref_auto_location">Override device\'s location</string>
 
     <string name="pref_title_display_name">Location (eg Town, Country)</string>
+    <string name="pref_auto_location_title">Set location manually</string>
     <string name="pref_weather_lat_long">Dumbarton, Scotland</string>
 
     <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
-    <string-array name="pref_example_list_titles">
+    <!--string-array name="pref_example_list_titles">
         <item>Always</item>
         <item>When possible</item>
         <item>Never</item>
@@ -27,7 +29,7 @@
         <item>1</item>
         <item>0</item>
         <item>-1</item>
-    </string-array>
+    </string-array-->
 
     <!-- Example settings for Data & Sync -->
     <string name="pref_header_data_sync">Data &amp; sync</string>
@@ -50,6 +52,33 @@
         <item>-1</item>
     </string-array>
 
+    <string name="pref_news_stories_to_display">News stories to display</string>
+    <string-array name="pref_news_story_titles">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
+
+    <string-array name="pref_news_story_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
+
     <string-array name="list_preference_entries">
         <item>Entry 1</item>
         <item>Entry 2</item>
@@ -67,17 +96,20 @@
     <string name="pref_title_system_sync_settings">System sync settings</string>
 
     <!-- Example settings for Notifications -->
-    <string name="pref_header_notifications">Notifications</string>
+    <string name="pref_header_news">News</string>
 
-    <string name="pref_title_new_message_notifications">New message notifications</string>
+    <string name="pref_title_new_message_notifications">Enable news reports</string>
 
-    <string name="pref_title_ringtone">Ringtone</string>
+    <string name="pref_title_ringtone">RSS Source</string>
     <string name="pref_ringtone_silent">Silent</string>
 
-    <string name="pref_title_vibrate">Vibrate</string>
+    <string name="pref_title_vibrate">Items to display</string>
 
     <string name="status_bar_clock_12hr_format"><font size="36">h:mm a\n</font><font size="18">E, dd MMM</font></string>
     <string name="status_bar_clock_24hr_format"><font size="36">H:mm\n</font><font size="18">E, dd MMM</font></string>
+
+    <string name="permission_fine_location_rationale">Permission is required to access the device\'s location</string>
+    <string name="ok">OK</string>
 
     <!--
      android:format12Hour="h:mm a\nE, dd MMM"
