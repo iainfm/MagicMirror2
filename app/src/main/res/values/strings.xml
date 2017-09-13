@@ -115,7 +115,7 @@
      android:format12Hour="h:mm a\nE, dd MMM"
      android:format24Hour="H:mm\nE, dd MMM"
  -->
-
+    <string name="rss_feeds_title">Select RSS News Feed</string>
     <string-array name="rss_news_feeds">
         <item>BBC News Front Page</item>
         <item>BBC World</item>
@@ -142,7 +142,6 @@
         <item>Sky News Technology</item>
         <item>Sky News Entertainment</item>
         <item>Sky News Strange News</item>
-        <item></item>
     </string-array>
     <string-array name="rss_news_urls">
         <item>http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/front_page/rss.xml</item>

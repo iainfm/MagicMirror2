@@ -33,6 +33,13 @@
         android:positiveButtonText="@null"
         android:title="@string/pref_news_stories_to_display" />
 
+    <ListPreference
+        android:entries="@array/rss_news_feeds"
+        android:entryValues="@array/rss_news_urls"
+        android:key="rss_feed"
+        android:title="@string/rss_feeds_title" />
+
+
     <EditTextPreference
         android:title="test"
         android:inputType="time"
