@@ -142,12 +142,15 @@
         <item>Sky News Technology</item>
         <item>Sky News Entertainment</item>
         <item>Sky News Strange News</item>
+        <item>Traffic Scotland Incidents</item>
     </string-array>
     <string-array name="rss_news_urls">
         <item>http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/front_page/rss.xml</item>
         <item>http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/world/rss.xml</item>
         <item>http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/uk/rss.xml</item>
         <item>http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/england/rss.xml</item>
+        <item>http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/northern_ireland/rss.xml</item>
+        <item>http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/scotland/rss.xml</item>
         <item>http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/wales/rss.xml</item>
         <item>http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/business/rss.xml</item>
         <item>http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/uk_politics/rss.xml</item>
@@ -167,5 +170,6 @@
         <item>http://feeds.skynews.com/feeds/rss/technology.xml</item>
         <item>http://feeds.skynews.com/feeds/rss/entertainment.xml</item>
         <item>http://feeds.skynews.com/feeds/rss/strange.xml</item>
+        <item>http://trafficscotland.org/rss/feeds/currentincidents.aspx</item>
     </string-array>
 </resources>

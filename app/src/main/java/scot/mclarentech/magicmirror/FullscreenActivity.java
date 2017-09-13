@@ -161,7 +161,11 @@ public class FullscreenActivity extends AppCompatActivity {
         hide();
         doWeather();
         // new getNews().execute("http://feeds.skynews.com/feeds/rss/home.xml");
-        new getNews().execute("http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/scotland/rss.xml");
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        String news_url = sharedPref.getString("rss_feed", "http://feeds.skynews.com/feeds/rss/home.xml");
+        Log.d("RSS", news_url);
+        new getNews().execute(news_url);
+                //"http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/scotland/rss.xml");
 
         String[] values = new String[]{"", ""}; // Probably redundant
 
