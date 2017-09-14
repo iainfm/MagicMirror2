@@ -151,7 +151,6 @@ public class FullscreenActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Log.d("TAP", "tap");
                 Intent myIntent = new Intent(FullscreenActivity.this, SettingsActivity.class);
                 FullscreenActivity.this.startActivity(myIntent);
             }
@@ -429,7 +428,6 @@ public class FullscreenActivity extends AppCompatActivity {
                     selectedLng = lastLocation.getLongitude();
                     searchRoad = String.format("%.6f", lastLocation.getLatitude()) + ", " +
                             String.format("%.6f", lastLocation.getLongitude());
-                    Log.d("***", searchRoad);
 
                     try {
                         addressList = g.getFromLocation(selectedLat, selectedLng, 1);

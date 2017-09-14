@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="24dp"
+    android:layout_height="fill_parent"
     android:padding="0dip" >
 
     <TextView
         android:id="@+id/firstLine"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_alignWithParentIfMissing="true"
+        android:ellipsize="start"
         android:gravity="end"
+        android:maxLines="2"
         android:text=""
         android:textColor="@android:color/white"
-        android:ellipsize="start"
         android:textSize="8pt"
         android:textStyle="bold" />
 

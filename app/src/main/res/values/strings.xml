@@ -116,6 +116,7 @@
      android:format24Hour="H:mm\nE, dd MMM"
  -->
     <string name="rss_feeds_title">Select RSS News Feed</string>
+    <string name="pref_header_credits">Credits</string>
     <string-array name="rss_news_feeds">
         <item>BBC News Front Page</item>
         <item>BBC World</item>
