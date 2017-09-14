@@ -160,12 +160,7 @@ public class FullscreenActivity extends AppCompatActivity {
 
         hide();
         doWeather();
-        // new getNews().execute("http://feeds.skynews.com/feeds/rss/home.xml");
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        String news_url = sharedPref.getString("rss_feed", "http://feeds.skynews.com/feeds/rss/home.xml");
-        Log.d("RSS", news_url);
-        new getNews().execute(news_url);
-                //"http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/scotland/rss.xml");
+        doNews();
 
         String[] values = new String[]{"", ""}; // Probably redundant
 
@@ -225,6 +220,18 @@ public class FullscreenActivity extends AppCompatActivity {
 
         if (display_weather == true) {
             updateWeather();
+        } else {
+            clearWeather();
+        }
+    }
+
+    private void doNews() {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        Boolean display_news = sharedPref.getBoolean("enable_news_reports", true);
+
+        if (display_news == true) {
+            String news_url = sharedPref.getString("rss_feed", "http://feeds.skynews.com/feeds/rss/home.xml");
+            new getNews().execute(news_url);
         } else {
             clearWeather();
         }
@@ -376,11 +383,17 @@ public class FullscreenActivity extends AppCompatActivity {
             }
             finally {
                 Address address = addressList.get(0);
-                textViewLocation.setText(address.getLocality() + ", " + address.getCountryCode());
+                textViewLocation.setText(address.getSubLocality() + ", " + address.getCountryCode());
                 if (address.hasLatitude() && address.hasLongitude()) {
                     selectedLat = address.getLatitude();
                     selectedLng = address.getLongitude();
                     selectedLoc = address.getLocality();
+                    if (selectedLoc == null) {
+                        selectedLoc = address.getSubLocality();
+                    }
+                    if (selectedLoc == null) {
+                        selectedLoc = address.getAdminArea();
+                    }
                     selectedCountry = address.getCountryCode();
                 }
 
@@ -404,6 +417,11 @@ public class FullscreenActivity extends AppCompatActivity {
                     return null; //TODO;
                 }
                 Location lastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+                if (lastLocation == null) {
+                    // Revert to network provider if GPS fails
+                    lastLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                }
                 if (lastLocation != null) {
                     selectedLat = lastLocation.getLatitude();
                     selectedLng = lastLocation.getLongitude();
@@ -422,6 +440,13 @@ public class FullscreenActivity extends AppCompatActivity {
                 }
             }
         }
+        if (selectedLoc == "") {
+            selectedLoc = "Unknown";
+        }
+
+        if (selectedCountry == "") {
+            selectedCountry = "Unknown";
+        }
 
         return String.format("%.3f", selectedLat) + "," +
                 String.format("%.2f",selectedLng) + "," +
@@ -432,6 +457,7 @@ public class FullscreenActivity extends AppCompatActivity {
     public static void updateNews(String newsXML) {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = null;
+        Integer maxItems = 5;
 
         try {
             builder = factory.newDocumentBuilder();
@@ -448,7 +474,14 @@ public class FullscreenActivity extends AppCompatActivity {
             if (nl != null) {
                 int length = nl.getLength();
                 int items = docEle.getElementsByTagName("item").getLength();
-                if (items > 5) { items = 5; };
+
+                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(myThis);
+
+                if (sharedPref.contains("news_stories")) {
+                    maxItems = Integer.parseInt(sharedPref.getString("news_stories", "5"));
+                }
+
+                if (items > maxItems) { items = maxItems; };
 
                 for (int i = 0; i < length; i++) {
                     if (nl.item(i).getNodeType() == Node.ELEMENT_NODE) {

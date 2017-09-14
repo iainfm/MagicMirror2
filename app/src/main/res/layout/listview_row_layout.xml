@@ -16,6 +16,7 @@
         android:text=""
         android:textColor="@android:color/white"
         android:ellipsize="start"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>

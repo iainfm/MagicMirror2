@@ -22,10 +22,10 @@
         android:layout_height="100dp"
         android:format12Hour="@string/status_bar_clock_12hr_format"
         android:format24Hour="@string/status_bar_clock_24hr_format"
+        android:gravity="fill_vertical"
         android:textAlignment="textEnd"
         android:textColor="@android:color/white"
-        android:gravity="fill_vertical"
-        />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textViewWeather"
@@ -55,14 +55,15 @@
 
     <TextView
         android:id="@+id/textViewIcon"
-        android:layout_marginTop="0dp"
-        android:layout_marginLeft="0dp"
         android:layout_width="250dp"
         android:layout_height="100dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
         android:text=""
         android:textAlignment="viewStart"
         android:textColor="@android:color/white"
         android:textSize="32dp"
+        android:textStyle="bold"
         tools:drawableRight="@drawable/clear_day" />
 <!--        android:autoSizeTextType="uniform"-->
     <FrameLayout
