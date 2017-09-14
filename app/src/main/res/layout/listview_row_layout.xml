@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="24dp"
-    android:padding="2dip" >
+    android:padding="0dip" >
 
     <TextView
         android:id="@+id/firstLine"
@@ -16,7 +16,7 @@
         android:text=""
         android:textColor="@android:color/white"
         android:ellipsize="start"
-        android:textSize="14sp"
+        android:textSize="8pt"
         android:textStyle="bold" />
 
 </RelativeLayout>

@@ -151,7 +151,7 @@ public class FullscreenActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("TAP", "tap");
+                // Log.d("TAP", "tap");
                 Intent myIntent = new Intent(FullscreenActivity.this, SettingsActivity.class);
                 FullscreenActivity.this.startActivity(myIntent);
             }
@@ -334,7 +334,9 @@ public class FullscreenActivity extends AppCompatActivity {
             public void run() {
                 runOnUiThread(new Runnable() {
                     public void run() {
+
                         doWeather();
+                        doNews();
                     }
                 });
             }
