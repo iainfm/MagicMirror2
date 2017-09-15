@@ -231,8 +231,6 @@ public class FullscreenActivity extends AppCompatActivity {
         if (display_news == true) {
             String news_url = sharedPref.getString("rss_feed", "http://feeds.skynews.com/feeds/rss/home.xml");
             new getNews().execute(news_url);
-        } else {
-            clearWeather();
         }
     }
 
