@@ -4,6 +4,12 @@
          dismiss it. -->
     <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
 
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="autorun_switch"
+        android:summary="@string/pref_description_autorun"
+        android:title="@string/pref_title_autorun" />
+
     <Preference
         android:title="Weather"
         android:summary="Powered by darksky.net; icons by dribbble.com/heeyeun"/>

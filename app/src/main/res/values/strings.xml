@@ -10,6 +10,9 @@
     <!-- Example General settings -->
     <string name="pref_header_weather">Weather</string>
 
+    <string name="pref_title_autorun">Run on device startup</string>
+    <string name="pref_description_autorun">Start Magic Mirror automatically when the device boots</string>
+
     <string name="pref_title_weather_reports">Enable weather reports</string>
     <string name="pref_description_weather_reports">Display local weather reports
     </string>
@@ -116,7 +119,7 @@
      android:format24Hour="H:mm\nE, dd MMM"
  -->
     <string name="rss_feeds_title">Select RSS News Feed</string>
-    <string name="pref_header_credits">Credits</string>
+    <string name="pref_header_credits">Autorun and credits</string>
     <string-array name="rss_news_feeds">
         <item>BBC News Front Page</item>
         <item>BBC World</item>
