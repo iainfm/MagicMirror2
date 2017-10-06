@@ -438,6 +438,12 @@ public class FullscreenActivity extends AppCompatActivity {
                     try {
                         addressList = g.getFromLocation(selectedLat, selectedLng, 1);
                         selectedLoc = addressList.get(0).getLocality();
+                        if (selectedLoc == null) {
+                            selectedLoc = addressList.get(0).getSubLocality();
+                        }
+                        if (selectedLoc == null) {
+                            selectedLoc = addressList.get(0).getSubAdminArea();
+                        }
                         selectedCountry = addressList.get(0).getCountryCode();
                     } catch (IOException e) {
                         Toast.makeText(this,"Location not found", Toast.LENGTH_SHORT).show();
