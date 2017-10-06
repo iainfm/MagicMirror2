@@ -28,6 +28,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,7 +61,6 @@ import retrofit.client.Response;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.text.Html.FROM_HTML_MODE_COMPACT;
 import static android.text.Spanned.SPAN_INCLUSIVE_INCLUSIVE;
-import static android.view.Gravity.CENTER;
 import static scot.mclarentech.magicmirror.R.layout.activity_fullscreen;
 
 public class FullscreenActivity extends AppCompatActivity {
@@ -76,6 +76,7 @@ public class FullscreenActivity extends AppCompatActivity {
     private static final int UI_ANIMATION_DELAY = 300;
     private final Handler mHideHandler = new Handler();
     private View mContentView;
+    private LinearLayout mLL_top;
     private final Runnable mHidePart2Runnable = new Runnable() {
         @SuppressLint("InlinedApi")
         @Override
@@ -89,6 +90,7 @@ public class FullscreenActivity extends AppCompatActivity {
         }
     };
     private View mControlsView;
+
     private final Runnable mShowPart2Runnable = new Runnable() {
         @Override
         public void run() {
@@ -128,9 +130,11 @@ public class FullscreenActivity extends AppCompatActivity {
         mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = findViewById(R.id.fullscreen_content);
         m_listview = (ListView) findViewById(R.id.ListViewRight);
+
+
         textViewWeather = (TextView) findViewById(R.id.textViewWeather);
         textViewIcon = (TextView) findViewById(R.id.textViewIcon);
-        textViewLocation = (TextView) findViewById(R.id.textViewLocation);
+        // textViewLocation = (TextView) findViewById(R.id.textViewLocation);
 
         myThis = this;
 
@@ -147,7 +151,11 @@ public class FullscreenActivity extends AppCompatActivity {
         // while interacting with the UI.
 
         TextView btn = (TextView) findViewById(R.id.textViewIcon);
-        btn.bringToFront();
+        // btn.bringToFront();
+
+        LinearLayout mLL_top = (LinearLayout) findViewById(R.id.ll_master);
+        mLL_top.bringToFront();
+
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -240,7 +248,7 @@ public class FullscreenActivity extends AppCompatActivity {
         Resources res = getResources();
         int resID = res.getIdentifier("", "drawable", getPackageName());
 
-        textViewLocation.setText("");
+        // textViewLocation.setText("");
 
     }
 
@@ -282,7 +290,7 @@ public class FullscreenActivity extends AppCompatActivity {
                     CharSequence temp_loc = TextUtils.concat(temp_span, "\n", loc_span);
 
                     textViewIcon.setText(temp_loc);
-                    textViewIcon.setGravity(CENTER);
+                    // textViewIcon.setGravity(CENTER);
 
                     displayWeather = ""; // weatherResponse.getCurrently().getSummary() +
                     // ", " + String.format("%.0f",weatherResponse.getCurrently().getTemperature()) +
@@ -311,7 +319,7 @@ public class FullscreenActivity extends AppCompatActivity {
                 textViewWeather.setText(displayWeather);
                 Resources res = getResources();
                 int resID = res.getIdentifier(icon_name, "drawable", getPackageName());
-                textViewIcon.setCompoundDrawablesWithIntrinsicBounds(0, 0, resID, 0);
+                textViewIcon.setCompoundDrawablesWithIntrinsicBounds(resID, 0, 0, 0);
             }
 
             @Override
@@ -382,7 +390,7 @@ public class FullscreenActivity extends AppCompatActivity {
             }
             finally {
                 Address address = addressList.get(0);
-                textViewLocation.setText(address.getSubLocality() + ", " + address.getCountryCode());
+                // textViewLocation.setText(address.getSubLocality() + ", " + address.getCountryCode());
                 if (address.hasLatitude() && address.hasLongitude()) {
                     selectedLat = address.getLatitude();
                     selectedLng = address.getLongitude();
