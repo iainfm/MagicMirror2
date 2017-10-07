@@ -15,7 +15,7 @@
         android:textColor="#ffffff"
         android:textSize="50sp"
         tools:background="@android:color/black"
-        android:visibility="gone"/>
+        />
 
 <LinearLayout
     android:id="@+id/ll_master"
