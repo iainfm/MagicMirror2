@@ -76,7 +76,7 @@ public class FullscreenActivity extends AppCompatActivity {
     private View mContentView;
     private LinearLayout mLL_top;
 
-    private View mControlsView;
+    // private View mControlsView;
     private boolean mVisible;
 
     /* private final View.OnTouchListener mDelayHideTouchListener = new View.OnTouchListener() {
@@ -96,7 +96,7 @@ public class FullscreenActivity extends AppCompatActivity {
         setContentView(activity_fullscreen);
 
         mVisible = true;
-        mControlsView = findViewById(R.id.fullscreen_content_controls);
+        // mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = findViewById(R.id.fullscreen_content);
         m_listview = (ListView) findViewById(R.id.ListViewRight);
 
