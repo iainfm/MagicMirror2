@@ -12,7 +12,7 @@
 
     <Preference
         android:title="Weather"
-        android:summary="Powered by darksky.net; icons by dribbble.com/heeyeun"/>
+        android:summary="Powered by darksky.net; icons by dribbble.com/heeyeun; API by John Hiott"/>
     <Preference
         android:title="News"
         android:summary="Supplied by BBC, Sky News, and Traffic Scotland"/>
