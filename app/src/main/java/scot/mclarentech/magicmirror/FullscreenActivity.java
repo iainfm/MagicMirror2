@@ -116,7 +116,7 @@ public class FullscreenActivity extends AppCompatActivity {
 
         String[] values = new String[]{"", ""}; // Probably redundant
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.listview_row_layout,
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.listview_row_layout,
                 R.id.firstLine, values);
         myListView = (ListView) findViewById(R.id.ListViewRight);
         myListView.setAdapter(adapter);
