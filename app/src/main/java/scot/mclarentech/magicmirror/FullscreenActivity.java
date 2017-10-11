@@ -69,7 +69,7 @@ import static scot.mclarentech.magicmirror.R.layout.activity_fullscreen;
 
 public class FullscreenActivity extends AppCompatActivity {
 
-    public ListView m_listview;
+    public ListView myListView;
     public Activity myThis;
     public TextView textViewIcon;
     public TextView textViewWeather;
@@ -118,8 +118,8 @@ public class FullscreenActivity extends AppCompatActivity {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.listview_row_layout,
                 R.id.firstLine, values);
-        m_listview = (ListView) findViewById(R.id.ListViewRight);
-        m_listview.setAdapter(adapter);
+        myListView = (ListView) findViewById(R.id.ListViewRight);
+        myListView.setAdapter(adapter);
     }
 
     @Override
@@ -411,7 +411,7 @@ public class FullscreenActivity extends AppCompatActivity {
 
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(myThis, R.layout.listview_row_layout,
                             R.id.firstLine, headlines);
-                    m_listview.setAdapter(adapter);
+                    myListView.setAdapter(adapter);
 
                 }
 
