@@ -11,10 +11,11 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +28,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,9 +42,14 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -61,66 +68,42 @@ import static android.text.Spanned.SPAN_INCLUSIVE_INCLUSIVE;
 import static scot.mclarentech.magicmirror.R.layout.activity_fullscreen;
 
 public class FullscreenActivity extends AppCompatActivity {
-    private static final boolean AUTO_HIDE = true;
-    public static ListView m_listview;
-    public static Activity myThis;
-    public static TextView textViewIcon;
-    public static TextView textViewWeather;
-    public static TextView textViewLocation;
-    private boolean mHasFocus;
-    private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
+
+    public ListView m_listview;
+    public Activity myThis;
+    public TextView textViewIcon;
+    public TextView textViewWeather;
+    // private boolean mHasFocus;
     private static final int REQUEST_FINE_LOCATION = 0;
     private Timer autoUpdate;
-    private static final int UI_ANIMATION_DELAY = 300;
-    private final Handler mHideHandler = new Handler();
     private View mContentView;
-    private LinearLayout mLL_top;
-
-    // private View mControlsView;
-    private boolean mVisible;
-
-    /* private final View.OnTouchListener mDelayHideTouchListener = new View.OnTouchListener() {
-        @Override
-        public boolean onTouch(View view, MotionEvent motionEvent) {
-            if (AUTO_HIDE) {
-                // delayedHide(AUTO_HIDE_DELAY_MILLIS);
-            }
-            return false;
-        }
-    }; */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ForecastApi.create("a2473c26e33cdf595533164fc3e19824");
+        ForecastApi.create(getString(R.string.darksky_api_key));
         setContentView(activity_fullscreen);
 
-        mVisible = true;
-        // mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = findViewById(R.id.fullscreen_content);
-        m_listview = (ListView) findViewById(R.id.ListViewRight);
 
 
         textViewWeather = (TextView) findViewById(R.id.textViewWeather);
         textViewIcon = (TextView) findViewById(R.id.textViewIcon);
+        TextClock clk = (TextClock) findViewById(R.id.textClock);
         myThis = this;
-
-        // Set up the user interaction to manually show or hide the system UI.
-        /*mContentView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // toggle();
-            }
-        }); */
-
-
-
-        TextView btn = (TextView) findViewById(R.id.textViewIcon);
 
         LinearLayout mLL_top = (LinearLayout) findViewById(R.id.ll_master);
         mLL_top.bringToFront();
 
-        btn.setOnClickListener(new View.OnClickListener() {
+        textViewIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(FullscreenActivity.this, SettingsActivity.class);
+                FullscreenActivity.this.startActivity(myIntent);
+            }
+        });
+
+        clk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(FullscreenActivity.this, SettingsActivity.class);
@@ -135,11 +118,13 @@ public class FullscreenActivity extends AppCompatActivity {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.listview_row_layout,
                 R.id.firstLine, values);
+        m_listview = (ListView) findViewById(R.id.ListViewRight);
         m_listview.setAdapter(adapter);
     }
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
+        Boolean mHasFocus;
         super.onWindowFocusChanged(hasFocus);
         mHasFocus = hasFocus;
         if (mHasFocus) {
@@ -158,7 +143,7 @@ public class FullscreenActivity extends AppCompatActivity {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         Boolean display_weather = sharedPref.getBoolean("weather_switch", true);
 
-        if (display_weather == true) {
+        if (display_weather) {
             updateWeather();
         } else {
             clearWeather();
@@ -169,7 +154,7 @@ public class FullscreenActivity extends AppCompatActivity {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         Boolean display_news = sharedPref.getBoolean("enable_news_reports", true);
 
-        if (display_news == true) {
+        if (display_news) {
             String news_url = sharedPref.getString("rss_feed", "http://feeds.skynews.com/feeds/rss/home.xml");
             new getNews().execute(news_url);
         }
@@ -177,10 +162,6 @@ public class FullscreenActivity extends AppCompatActivity {
 
     private void clearWeather() {
         textViewWeather.setText("");
-
-        Resources res = getResources();
-        int resID = res.getIdentifier("", "drawable", getPackageName());
-
     }
 
     private void updateWeather() {
@@ -237,7 +218,7 @@ public class FullscreenActivity extends AppCompatActivity {
 
                 if (weatherResponse.getDaily() != null) {
                     displayWeather = displayWeather + weatherResponse.getDaily().getSummary().replaceAll(".$", "");
-                    if (icon_name == "") {
+                    if (icon_name.equals("")) {
                         icon_name = weatherResponse.getDaily().getIcon().replace("-", "_");
                     }
                 }
@@ -251,7 +232,7 @@ public class FullscreenActivity extends AppCompatActivity {
 
             @Override
             public void failure(RetrofitError retrofitError) {
-                textViewWeather.setText("Error while calling: " + retrofitError.getUrl());
+                textViewWeather.setText(getString(R.string.weather_error));
             }
         });
 
@@ -272,7 +253,7 @@ public class FullscreenActivity extends AppCompatActivity {
                     }
                 });
             }
-        }, 0, 300000); // updates each 5 mins
+        }, 0, 300000); // update every 5 mins
     }
 
     @Override
@@ -284,9 +265,6 @@ public class FullscreenActivity extends AppCompatActivity {
     private String getLocation() {
         double selectedLat = 0.0;
         double selectedLng = 0.0;
-        double gpsLat = 0.0;
-        double gpsLng = 0.0;
-
         boolean useManualLocation = true;
 
         String selectedLoc = "";
@@ -312,43 +290,35 @@ public class FullscreenActivity extends AppCompatActivity {
                 addressList = g.getFromLocationName(searchRoad, 1);
 
             } catch (IOException e) {
-                Toast.makeText(this, "Location not found", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getString(R.string.location_error), Toast.LENGTH_LONG).show();
                 e.printStackTrace();
-            }
-            finally {
-                Address address = addressList.get(0);
-                // textViewLocation.setText(address.getSubLocality() + ", " + address.getCountryCode());
-                if (address.hasLatitude() && address.hasLongitude()) {
-                    selectedLat = address.getLatitude();
-                    selectedLng = address.getLongitude();
-                    selectedLoc = address.getLocality();
-                    if (selectedLoc == null) {
-                        selectedLoc = address.getSubLocality();
+            } finally {
+
+                try {
+                    Address address = addressList.get(0);
+                    if (address.hasLatitude() && address.hasLongitude()) {
+                        selectedLat = address.getLatitude();
+                        selectedLng = address.getLongitude();
+                        selectedLoc = address.getLocality();
+                        if (selectedLoc == null) {
+                            selectedLoc = address.getSubLocality();
+                        }
+                        if (selectedLoc == null) {
+                            selectedLoc = address.getAdminArea();
+                        }
+                        selectedCountry = address.getCountryCode();
                     }
-                    if (selectedLoc == null) {
-                        selectedLoc = address.getAdminArea();
-                    }
-                    selectedCountry = address.getCountryCode();
+                } catch (Exception exc) {
+                    Log.e("MM", "addressList exception");
                 }
-
             }
-        }
-
-        else {
+        } else {
             // GPS mode
             LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
             if (locationManager != null) {
                 if (ActivityCompat.checkSelfPermission(this, ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                        // && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
                     requestFineLocationPermission();
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    return null; //TODO;
+                    return null;
                 }
                 Location lastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
@@ -373,27 +343,27 @@ public class FullscreenActivity extends AppCompatActivity {
                         }
                         selectedCountry = addressList.get(0).getCountryCode();
                     } catch (IOException e) {
-                        Toast.makeText(this,"Location not found", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, getString(R.string.location_error), Toast.LENGTH_SHORT).show();
                         e.printStackTrace();
                     }
                 }
             }
         }
-        if (selectedLoc == "") {
+        if ((selectedLoc != null) && selectedLoc.equals("")) {
             selectedLoc = "Unknown";
         }
 
-        if (selectedCountry == "") {
+        if ((selectedCountry != null) && selectedCountry.equals("")) {
             selectedCountry = "Unknown";
         }
 
         return String.format("%.3f", selectedLat) + "," +
-                String.format("%.2f",selectedLng) + "," +
+                String.format("%.2f", selectedLng) + "," +
                 selectedLoc + "," +
                 selectedCountry;
     }
 
-    public static void updateNews(String newsXML) {
+    public void updateNews(String newsXML) {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = null;
         Integer maxItems = 5;
@@ -403,51 +373,55 @@ public class FullscreenActivity extends AppCompatActivity {
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         }
-        InputStream inputStream = new ByteArrayInputStream(newsXML.getBytes());
-        String[] headlines = new String[] { "", "", "", "", "", "", "", "", "", ""};
-        try {
-            org.w3c.dom.Document document = builder.parse(inputStream);
-            Element docEle = document.getDocumentElement();
-            NodeList nl = docEle.getChildNodes();
+        if (newsXML != null) {
+            InputStream inputStream = new ByteArrayInputStream(newsXML.getBytes());
+            String[] headlines = new String[]{"", "", "", "", "", "", "", "", "", ""};
+            try {
+                org.w3c.dom.Document document = builder.parse(inputStream);
+                Element docEle = document.getDocumentElement();
+                NodeList nl = docEle.getChildNodes();
 
-            if (nl != null) {
-                int length = nl.getLength();
-                int items = docEle.getElementsByTagName("item").getLength();
+                if (nl != null) {
+                    int length = nl.getLength();
+                    int items = docEle.getElementsByTagName("item").getLength();
 
-                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(myThis);
+                    SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(myThis);
 
-                if (sharedPref.contains("news_stories")) {
-                    maxItems = Integer.parseInt(sharedPref.getString("news_stories", "5"));
-                }
+                    if (sharedPref.contains("news_stories")) {
+                        maxItems = Integer.parseInt(sharedPref.getString("news_stories", "5"));
+                    }
 
-                if (items > maxItems) { items = maxItems; };
+                    if (items > maxItems) {
+                        items = maxItems;
+                    }
 
-                for (int i = 0; i < length; i++) {
-                    if (nl.item(i).getNodeType() == Node.ELEMENT_NODE) {
-                        Element el = (Element) nl.item(i);
-                        for (int j =0 ; j < items ; j++) {
-                            headlines[j] = el.getElementsByTagName("item").item(j).getChildNodes().item(1).getTextContent();
-                            if (Build.VERSION.SDK_INT >= 24) {
-                                headlines[j] = Html.fromHtml(headlines[j], FROM_HTML_MODE_COMPACT).toString(); // for 24 api and more
-                            } else {
-                                headlines[j] = Html.fromHtml(headlines[j]).toString(); // or for older api
+                    for (int i = 0; i < length; i++) {
+                        if (nl.item(i).getNodeType() == Node.ELEMENT_NODE) {
+                            Element el = (Element) nl.item(i);
+                            for (int j = 0; j < items; j++) {
+                                headlines[j] = el.getElementsByTagName("item").item(j).getChildNodes().item(1).getTextContent();
+                                if (Build.VERSION.SDK_INT >= 24) {
+                                    headlines[j] = Html.fromHtml(headlines[j], FROM_HTML_MODE_COMPACT).toString(); // for 24 api and more
+                                } else {
+                                    headlines[j] = Html.fromHtml(headlines[j]).toString(); // or for older api
+                                }
                             }
                         }
                     }
+
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(myThis, R.layout.listview_row_layout,
+                            R.id.firstLine, headlines);
+                    m_listview.setAdapter(adapter);
+
                 }
 
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(myThis, R.layout.listview_row_layout,
-                        R.id.firstLine, headlines);
-                m_listview.setAdapter(adapter);
-
+            } catch (SAXException e) {
+                e.printStackTrace();
+                Log.d("d", "SAXException");
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.d("d", "IOException");
             }
-
-        } catch (SAXException e) {
-            e.printStackTrace();
-            Log.d("d", "SAXException");
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.d("d", "IOException");
         }
     }
 
@@ -472,7 +446,65 @@ public class FullscreenActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     REQUEST_FINE_LOCATION);
         }
-        // END_INCLUDE(fine_location_permission_request)
     }
 
+    private class getNews extends AsyncTask<String, Void, String> {
+        String server_response;
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            URL url;
+            HttpURLConnection urlConnection = null;
+
+            try {
+                url = new URL(strings[0]);
+                urlConnection = (HttpURLConnection) url.openConnection();
+                int responseCode = urlConnection.getResponseCode();
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    server_response = readStream(urlConnection.getInputStream());
+                }
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            updateNews(server_response);
+
+        }
+
+// Converting InputStream to String
+
+        @NonNull
+        private String readStream(InputStream in) {
+            BufferedReader reader = null;
+            StringBuffer response = new StringBuffer();
+            try {
+                reader = new BufferedReader(new InputStreamReader(in));
+                String line = "";
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (reader != null) {
+                    try {
+                        reader.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            return response.toString();
+        }
+    }
 }

@@ -21,8 +21,11 @@
     <string name="pref_title_display_name">Location (eg Town, Country)</string>
     <string name="pref_auto_location_title">Set location manually</string>
     <string name="pref_weather_lat_long">Dumbarton, Scotland</string>
-
+    <string name="weather_error">Error updating weather</string>
+    <string name="news_error">Error updating news</string>
+    <string name="location_error">Location not found</string>
     <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
+    <string name="darksky_api_key">a2473c26e33cdf595533164fc3e19824</string>
     <!--string-array name="pref_example_list_titles">
         <item>Always</item>
         <item>When possible</item>
