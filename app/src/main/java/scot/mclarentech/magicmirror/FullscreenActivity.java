@@ -51,6 +51,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -189,7 +190,7 @@ public class FullscreenActivity extends AppCompatActivity {
                 String icon_name = "";
 
                 if (weatherResponse.getCurrently() != null) {
-                    String temp = String.format("%.0f", weatherResponse.getCurrently().getTemperature()) +
+                    String temp = String.format(Locale.UK, "%.0f", weatherResponse.getCurrently().getTemperature()) +
                             "\u00B0C";
                     String loc = latLong[2] + ", " + latLong[3];
 
@@ -329,8 +330,8 @@ public class FullscreenActivity extends AppCompatActivity {
                 if (lastLocation != null) {
                     selectedLat = lastLocation.getLatitude();
                     selectedLng = lastLocation.getLongitude();
-                    searchRoad = String.format("%.6f", lastLocation.getLatitude()) + ", " +
-                            String.format("%.6f", lastLocation.getLongitude());
+                    searchRoad = String.format(Locale.UK, "%.6f", lastLocation.getLatitude()) + ", " +
+                            String.format(Locale.UK, "%.6f", lastLocation.getLongitude());
 
                     try {
                         addressList = g.getFromLocation(selectedLat, selectedLng, 1);
@@ -357,8 +358,8 @@ public class FullscreenActivity extends AppCompatActivity {
             selectedCountry = "Unknown";
         }
 
-        return String.format("%.3f", selectedLat) + "," +
-                String.format("%.2f", selectedLng) + "," +
+        return String.format(Locale.UK, "%.3f", selectedLat) + "," +
+                String.format(Locale.UK, "%.2f", selectedLng) + "," +
                 selectedLoc + "," +
                 selectedCountry;
     }
