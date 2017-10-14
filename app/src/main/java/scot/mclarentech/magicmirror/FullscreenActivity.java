@@ -70,10 +70,10 @@ import static scot.mclarentech.magicmirror.R.layout.activity_fullscreen;
 
 public class FullscreenActivity extends AppCompatActivity {
 
-    public ListView myListView;
-    public Activity myThis;
-    public TextView textViewIcon;
-    public TextView textViewWeather;
+    private ListView myListView;
+    private Activity myThis;
+    private TextView textViewIcon;
+    private TextView textViewWeather;
     // private boolean mHasFocus;
     private static final int REQUEST_FINE_LOCATION = 0;
     private Timer autoUpdate;
