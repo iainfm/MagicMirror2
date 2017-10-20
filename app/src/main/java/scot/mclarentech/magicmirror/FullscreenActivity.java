@@ -30,7 +30,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextClock;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.johnhiott.darkskyandroidlib.ForecastApi;
 import com.johnhiott.darkskyandroidlib.RequestBuilder;
@@ -291,7 +290,7 @@ public class FullscreenActivity extends AppCompatActivity {
                 addressList = g.getFromLocationName(searchRoad, 1);
 
             } catch (IOException e) {
-                Toast.makeText(this, getString(R.string.location_error), Toast.LENGTH_LONG).show();
+                // Toast.makeText(getBaseContext(), getString(R.string.location_error), Toast.LENGTH_LONG).show();
                 e.printStackTrace();
             } finally {
 
@@ -344,7 +343,7 @@ public class FullscreenActivity extends AppCompatActivity {
                         }
                         selectedCountry = addressList.get(0).getCountryCode();
                     } catch (IOException e) {
-                        Toast.makeText(this, getString(R.string.location_error), Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(this, getString(R.string.location_error), Toast.LENGTH_SHORT).show();
                         e.printStackTrace();
                     }
                 }

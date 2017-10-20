@@ -7,9 +7,9 @@ android {
         applicationId "scot.mclarentech.magicmirror"
         minSdkVersion 17
         targetSdkVersion 26
-        versionName '1.5'
+        versionName '1.6'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        versionCode 5
+        versionCode 6
     }
     buildTypes {
         release {
