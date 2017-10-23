@@ -83,7 +83,15 @@
 
         </LinearLayout>
 
+
+
     </LinearLayout>
 
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="296dp"
+        android:layout_height="350dp"
+        android:layout_gravity="center|bottom"
+        android:visibility="invisible"/>
 </FrameLayout>
 

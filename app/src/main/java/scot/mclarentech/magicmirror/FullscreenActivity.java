@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -25,6 +26,7 @@ import android.text.TextUtils;
 import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -51,6 +53,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -65,6 +68,7 @@ import retrofit.client.Response;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.text.Html.FROM_HTML_MODE_COMPACT;
 import static android.text.Spanned.SPAN_INCLUSIVE_INCLUSIVE;
+import static scot.mclarentech.magicmirror.R.id.webView;
 import static scot.mclarentech.magicmirror.R.layout.activity_fullscreen;
 
 public class FullscreenActivity extends AppCompatActivity {
@@ -77,6 +81,7 @@ public class FullscreenActivity extends AppCompatActivity {
     private static final int REQUEST_FINE_LOCATION = 0;
     private Timer autoUpdate;
     private View mContentView;
+    private WebView web;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +116,11 @@ public class FullscreenActivity extends AppCompatActivity {
             }
         });
 
+        web = (WebView) findViewById(webView);
+        web.setBackgroundColor(Color.TRANSPARENT); //for gif without background
+        web.loadUrl("file:///android_asset/halloween.html");
+        web.setVisibility(View.INVISIBLE);
+
         doWeather();
         doNews();
 
@@ -119,6 +129,9 @@ public class FullscreenActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.listview_row_layout,
                 R.id.firstLine, values);
         myListView = (ListView) findViewById(R.id.ListViewRight);
+        myListView.setBackgroundColor(Color.TRANSPARENT);
+        myListView.setDivider(null);
+        myListView.setDividerHeight(0);
         myListView.setAdapter(adapter);
     }
 
@@ -247,9 +260,9 @@ public class FullscreenActivity extends AppCompatActivity {
             public void run() {
                 runOnUiThread(new Runnable() {
                     public void run() {
-
                         doWeather();
                         doNews();
+                        doEasterEgg();
                     }
                 });
             }
@@ -505,6 +518,19 @@ public class FullscreenActivity extends AppCompatActivity {
                 }
             }
             return response.toString();
+        }
+    }
+    private void doEasterEgg() {
+        web = (WebView) findViewById(webView);
+        Random r = new Random();
+        int i = r.nextInt(3);
+        if (web.isShown()) {
+            web.setVisibility(View.INVISIBLE);
+        }
+        else {
+            if (i == 0) {
+                web.setVisibility(View.VISIBLE);
+            }
         }
     }
 }
