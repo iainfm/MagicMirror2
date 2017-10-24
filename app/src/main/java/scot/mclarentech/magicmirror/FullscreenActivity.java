@@ -51,6 +51,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
@@ -520,16 +521,22 @@ public class FullscreenActivity extends AppCompatActivity {
             return response.toString();
         }
     }
-    private void doEasterEgg() {
+    public void doEasterEgg() {
+        Calendar calendar = Calendar.getInstance();
+        int monthNumber  = (int) calendar.get(Calendar.MONTH) + 1;
+        int dayNumber = (int) calendar.get(Calendar.DAY_OF_MONTH);
+
+
         web = (WebView) findViewById(webView);
-        Random r = new Random();
-        int i = r.nextInt(3);
-        if (web.isShown()) {
-            web.setVisibility(View.INVISIBLE);
-        }
-        else {
-            if (i == 0) {
-                web.setVisibility(View.VISIBLE);
+        if ((monthNumber == 10) && dayNumber >= 21) {
+            Random r = new Random();
+            int i = r.nextInt(3);
+            if (web.isShown()) {
+                web.setVisibility(View.INVISIBLE);
+            } else {
+                if (i == 0) {
+                    web.setVisibility(View.VISIBLE);
+                }
             }
         }
     }
