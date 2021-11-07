@@ -1,8 +1,56 @@
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
          dismiss it. -->
     <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="display_webpage"
+        android:summary="@string/display_webpage_summary"
+        android:title="@string/display_webpage_title" />
+
+    <EditTextPreference
+        android:dependency="display_webpage"
+        android:key="display_webpage_url"
+        android:summary="@string/display_webpage_url_summary"
+        android:title="@string/display_webpage_url_title"
+        android:inputType="text"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:defaultValue="https://"
+        android:singleLine="true" />
+
+    <SeekBarPreference
+        android:id="@+id/seekBar"
+        android:dependency="display_webpage"
+        android:key="display_webpage_slider"
+        android:title="@string/display_webpage_percent_title"
+        android:max="10"
+        android:progress="5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <!--SeekBarPreference
+        android:id="@+id/seekBarScale"
+        android:dependency="display_webpage"
+        android:key="display_webpage_scale"
+        android:title="@string/display_webpage_scale_title"
+        android:max="8"
+        android:progress="4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/-->
+
+    <!--EditTextPreference
+        android:dependency="display_webpage"
+        android:key="display_webpage_percent"
+        android:summary="@string/display_webpage_percent_summary"
+        android:title="@string/display_webpage_percent_title"
+        android:inputType="number"
+        android:defaultValue="50"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true" /-->
 
     <SwitchPreference
         android:defaultValue="false"
@@ -10,14 +58,20 @@
         android:summary="@string/pref_description_autorun"
         android:title="@string/pref_title_autorun" />
 
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="pin_screen"
+        android:summary="@string/pin_summary"
+        android:title="@string/pin_title" />
+
     <Preference
         android:title="Weather"
-        android:summary="Powered by darksky.net; icons by dribbble.com/heeyeun; API by John Hiott"/>
+        android:summary="Powered by openweathermap.org; icons by/based on dribbble.com/heeyeun; API and JSON code snippets from survivingwithandroid.com"/>
     <Preference
         android:title="News"
         android:summary="Supplied by BBC, Sky News, and Traffic Scotland"/>
     <Preference
         android:title="App"
-        android:summary="Written by Iain McLaren, with much help from the internet"/>
+        android:summary="Written by Iain McLaren, with much use of stackoverflow.com."/>
 
 </PreferenceScreen>

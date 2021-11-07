@@ -6,25 +6,77 @@
         android:summary="@string/pref_description_weather_reports"
         android:title="@string/pref_title_weather_reports" />
 
+    <ListPreference
+        android:dependency="weather_switch"
+        android:defaultValue="4"
+        android:entries="@array/pref_weather_font_sizes"
+        android:entryValues="@array/pref_weather_font_sizes"
+        android:key="weather_fontsize"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_weather_font_size" />
+
+    <SwitchPreference
+        android:dependency="weather_switch"
+        android:defaultValue="false"
+        android:key="bold_weather_text"
+        android:title="@string/pref_bold_weather_text" />
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="units_switch"
+        android:summary="@string/pref_description_weather_units"
+        android:title="@string/pref_title_weather_units" />
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="windspeed_switch"
+        android:summary="@string/pref_description_windspeed_units"
+        android:title="@string/pref_title_windspeed_units" />
+
+
     <SwitchPreference
         android:defaultValue="false"
         android:key="manual_location_switch"
         android:summary="@string/pref_auto_location"
         android:title="@string/pref_auto_location_title" />
 
-    <!-- NOTE: EditTextPreference accepts EditText attributes. -->
-    <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
     <EditTextPreference
         android:dependency="manual_location_switch"
         android:defaultValue="@string/pref_weather_lat_long"
-        android:inputType="text"
-        android:capitalize="words"
-        android:key="example_text"
+        android:inputType="textCapWords"
+        android:key="manual_location"
         android:maxLines="1"
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="@string/pref_title_display_name" />
 
+    <SwitchPreference
+        android:dependency="weather_switch"
+        android:defaultValue="false"
+        android:key="custom_weather_api_key"
+        android:summary="@string/pref_custom_api_summary"
+        android:title="@string/pref_custom_api_key" />
+
+    <!-- NOTE: EditTextPreference accepts EditText attributes. -->
+    <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
+
+    <EditTextPreference
+        android:dependency="custom_weather_api_key"
+        android:inputType="textCapWords"
+        android:key="api_key"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:dialogMessage="@string/pref_custom_api_help"
+        android:title="@string/custom_api_key" />
+
+    <!-- NOTE: EditTextPreference accepts EditText attributes. -->
+    <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
+
+
+    <!-- android:inputType="text"
+//android:capitalize="words"-->
     <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
          dismiss it. -->
     <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->

@@ -3,6 +3,11 @@
     <!-- These settings headers are only used on tablets. -->
 
     <header
+        android:fragment="scot.mclarentech.magicmirror.SettingsActivity$CreditsPreferenceFragment"
+        android:icon="@drawable/ic_people_black_24dp"
+        android:title="@string/pref_header_credits" />
+
+    <header
         android:fragment="scot.mclarentech.magicmirror.SettingsActivity$GeneralPreferenceFragment"
         android:icon="@drawable/ic_cloud_black_24dp"
         android:title="@string/pref_header_weather" />
@@ -11,12 +16,6 @@
         android:fragment="scot.mclarentech.magicmirror.SettingsActivity$NotificationPreferenceFragment"
         android:icon="@drawable/ic_news_black_24dp"
         android:title="@string/pref_header_news" />
-
-    <header
-        android:fragment="scot.mclarentech.magicmirror.SettingsActivity$CreditsPreferenceFragment"
-        android:icon="@drawable/ic_people_black_24dp"
-        android:title="@string/pref_header_credits" />
-
 
     <!--header
         android:fragment="scot.mclarentech.magicmirror.SettingsActivity$DataSyncPreferenceFragment"

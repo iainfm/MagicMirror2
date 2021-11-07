@@ -13,13 +13,17 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
-import android.support.v7.app.ActionBar;
+// import android.support.v7.app.ActionBar;
+import androidx.appcompat.app.ActionBar;
+import androidx.core.app.NavUtils;
+
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.text.TextUtils;
 import android.view.MenuItem;
-import android.support.v4.app.NavUtils;
+// import android.support.v4.app.NavUtils;
+
 
 import java.util.List;
 
@@ -120,6 +124,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setupActionBar();
     }
 
@@ -190,8 +195,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
-            bindPreferenceSummaryToValue(findPreference("example_text"));
-            // bindPreferenceSummaryToValue(findPreference("example_list"));
+            bindPreferenceSummaryToValue(findPreference("manual_location"));
+            bindPreferenceSummaryToValue(findPreference("weather_fontsize"));
+            bindPreferenceSummaryToValue(findPreference("api_key"));
+
         }
 
         @Override
@@ -225,6 +232,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // guidelines.
             bindPreferenceSummaryToValue(findPreference("rss_feed"));
             bindPreferenceSummaryToValue(findPreference("news_stories"));
+            bindPreferenceSummaryToValue(findPreference("news_fontsize"));
         }
 
         @Override
@@ -255,6 +263,15 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // updated to reflect the new value, per the Android Design
             // guidelines.
             // bindPreferenceSummaryToValue(findPreference("sync_frequency"));
+            bindPreferenceSummaryToValue(findPreference("display_webpage_url"));
+            // bindPreferenceSummaryToValue(findPreference("display_webpage_slider"));
+            // bindPreferenceSummaryToValue(findPreference("display_webpage_percent"));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                findPreference("pin_screen").setEnabled(true);
+            }
+            else {
+                findPreference("pin_screen").setEnabled(false);
+            }
 
         }
 

@@ -16,7 +16,7 @@ public class RunOnStartup extends BroadcastReceiver {
             Boolean autorun = sharedPref.getBoolean("autorun_switch", false);
             if (autorun) {
                 Intent i = new Intent(context, FullscreenActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 context.startActivity(i);
             }
             else {

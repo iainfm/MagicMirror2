@@ -9,23 +9,57 @@
 
     <!-- Example General settings -->
     <string name="pref_header_weather">Weather</string>
+    <string name="pref_header_app">Settings</string>
+    <string name="weatherIconDescription">Weather Icon</string>
 
     <string name="pref_title_autorun">Run on device startup</string>
     <string name="pref_description_autorun">Start Magic Mirror automatically when the device boots</string>
 
     <string name="pref_title_weather_reports">Enable weather reports</string>
+    <string name="pref_title_weather_units">Use fahrenheit scale</string>
+    <string name="pref_title_windspeed_units">Use KPH for wind speed</string>
+    <string name="pref_description_windspeed_units">Default is MPH</string>
     <string name="pref_description_weather_reports">Display local weather reports
     </string>
+    <string name="pref_description_weather_units">Default is centigrade</string>
     <string name="pref_auto_location">Override device\'s location</string>
 
-    <string name="pref_title_display_name">Location (eg Town, Country)</string>
+    <string name="pref_title_display_name">Location (format: Town, Country)</string>
     <string name="pref_auto_location_title">Set location manually</string>
     <string name="pref_weather_lat_long">Dumbarton, Scotland</string>
-    <string name="weather_error">Error updating weather</string>
+    <string name="pref_rss_custom_url">https://www.androidauthority.com/android-development/feed/</string>
+    <string name="pref_description_rss_feed">Use a custom RSS feed</string>
+    <string name="pref_title_rss_feed">Custom RSS feed</string>
+    <string name="pref_title_custom_rss_feed">Enter feed URL. Prefix with transport, eg http://</string>
+    <string name="weather_error">Error updating weather\nPlease check your settings</string>
     <string name="news_error">Error updating news</string>
+    <string name="rss_error">Error retrieving RSS feed</string>
+    <string name="rss_suggestion">Please check URL and</string>
+    <string name ="rss_checkxport">transport in settings</string>
     <string name="location_error">Location not found</string>
     <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
     <string name="darksky_api_key">a2473c26e33cdf595533164fc3e19824</string>
+    <string name="openweathermap_api_key">170e49c651266a64ef7fd5e526def9d3</string>
+    <string name="pref_custom_api_key">Use custom OpenWeather API key</string>
+    <string name="custom_api_key">Custom API key</string>
+    <string name="pref_custom_api_summary">Obtain your own key from https://openweathermap.org/api"</string>
+    <string name="pref_custom_api_help">Enter your API key here. You must verify your email address to validate your key. New keys may take a few minutes to become active.</string>
+    <string name="permission_rationale">Location permission is needed for automatic location mode</string>
+    <string name="no_location_detected">Location lookup failed</string>
+    <string name="permission_denied_explanation">Location permission was denied. Please set location manually.</string>
+    <string name="settings">Settings</string>
+    <string name="settings_tip">Tip: tap the weather icon or clock for settings</string>
+    <string name="pin_title">Keep Magic Mirror in foreground</string>
+    <string name="pin_summary">Requires Android Marshmallow or greater</string>
+    <string name="pref_bold_weather_text">Display weather in bold</string>
+    <string name="pref_bold_news_text">Display news in bold</string>
+    <string name="display_webpage_summary">Choose your own content</string>
+    <string name="display_webpage_title">Display a custom webpage</string>
+    <string name="display_webpage_percent_summary">How much screen to occupy</string>
+    <string name="display_webpage_percent_title">Proportion of screen height to use</string>
+    <string name="display_webpage_scale_title">Web page display scale</string>
+    <string name="display_webpage_url_summary">Include http:// or https://</string>
+    <string name="display_webpage_url_title">URL of page to display</string>
     <!--string-array name="pref_example_list_titles">
         <item>Always</item>
         <item>When possible</item>
@@ -60,6 +94,34 @@
 
     <string name="pref_news_stories_to_display">News stories to display</string>
     <string-array name="pref_news_story_titles">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
+
+    <string name="pref_weather_font_size">Weather font size</string>
+    <string-array name="pref_weather_font_sizes">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
+
+    <string name="pref_news_font_size">News font size</string>
+    <string-array name="pref_news_font_sizes">
         <item>1</item>
         <item>2</item>
         <item>3</item>
@@ -122,7 +184,7 @@
      android:format24Hour="H:mm\nE, dd MMM"
  -->
     <string name="rss_feeds_title">Select RSS News Feed</string>
-    <string name="pref_header_credits">Autorun and credits</string>
+    <string name="pref_header_credits">App settings</string>
     <string-array name="rss_news_feeds">
         <item>BBC News Front Page</item>
         <item>BBC World</item>
