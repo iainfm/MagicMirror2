@@ -2,37 +2,20 @@ package scot.mclarentech.magicmirror;
 
 import android.app.Service;
 import android.content.Intent;
-import android.os.Handler;
+// import android.os.Handler;
 import android.os.IBinder;
-import android.os.SystemClock;
+// import android.os.SystemClock;
 import android.util.Log;
 
 public class keepInForeground extends Service {
 
-    private static String TAG = "kifService";
-    private Handler handler;
-    private Runnable runnable;
-    private final int runTime = 5000;
+    private static final String TAG = "kifService";
 
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.i(TAG, "onCreate");
-
-        // handler = new Handler();
-        // runnable = new Runnable() {
-            // @Override
-            // public void run() {
-                // handler.postDelayed(runnable, runTime);
-            // }
-        // };
-        // handler.post(runnable);
+        // Log.i(TAG, "onCreate");
     }
-
-
-    // public keepInForeground() {
-        // Log.i(TAG,"keepInForeground");
-    // }
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -57,12 +40,5 @@ public class keepInForeground extends Service {
         // this.startActivity(i);
         return START_STICKY;
     }
-
-    // @SuppressWarnings("deprecation")
-    // @Override
-    // public void onStart(Intent intent, int startId) {
-        //super.onStart(intent, startId);
-        //Log.i(TAG, "onStart");
-    //}
 
 }

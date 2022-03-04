@@ -1,34 +1,34 @@
 package scot.mclarentech.magicmirror;
 
-import android.Manifest;
+// import android.Manifest;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
+// import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.location.Location;
-import android.net.Uri;
+// import android.location.Location;
+// import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.provider.Settings;
+// import android.provider.Settings;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.RelativeSizeSpan;
 import android.util.Log;
-import android.util.TypedValue;
+// import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ImageView;
+// import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextClock;
 import android.widget.TextView;
@@ -36,16 +36,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
+// import androidx.core.app.ActivityCompat;
 
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+// import com.google.android.gms.location.FusedLocationProviderClient;
+// import com.google.android.gms.location.LocationCallback;
+// import com.google.android.gms.location.LocationRequest;
+// import com.google.android.gms.location.LocationResult;
+// import com.google.android.gms.location.LocationServices;
+// import com.google.android.gms.tasks.OnCompleteListener;
+// import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+// import com.johnhiott.darkskyandroidlib.BuildConfig;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -86,22 +87,10 @@ public class FullscreenActivity extends AppCompatActivity {
     private Activity myThis;
     private TextView textViewIcon;
     private TextView textViewWeather;
-    private TextView textViewNews;
-    private static final int REQUEST_FINE_LOCATION = 0;
     private Timer autoUpdate;
-    private View mContentView;
     private WebView web;
     private WebView webEE;
     private WebView wIcon;
-
-    private static final String TAG = FullscreenActivity.class.getSimpleName();
-    private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 34;
-    private FusedLocationProviderClient mFusedLocationClient;
-    protected Location mLastLocation;
-    private  Boolean mTrackingLocation;
-    private static final int REQUEST_LOCATION_PERMISSION = 1;
-
-    private LocationCallback mLocationCallback;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -112,8 +101,6 @@ public class FullscreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(activity_fullscreen);
 
-        mContentView = findViewById(R.id.fullscreen_content);
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         textViewWeather = findViewById(R.id.textViewWeather);
         textViewIcon = findViewById(R.id.textViewIcon);
         TextClock clk = findViewById(R.id.textClock);
@@ -122,55 +109,15 @@ public class FullscreenActivity extends AppCompatActivity {
         LinearLayout mLL_top = findViewById(R.id.ll_master);
         mLL_top.bringToFront();
 
-        textViewIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(FullscreenActivity.this, SettingsActivity.class);
-                FullscreenActivity.this.startActivity(myIntent);
-            }
+        textViewIcon.setOnClickListener(v -> {
+            Intent myIntent = new Intent(FullscreenActivity.this, SettingsActivity.class);
+            FullscreenActivity.this.startActivity(myIntent);
         });
 
-        clk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(FullscreenActivity.this, SettingsActivity.class);
-                FullscreenActivity.this.startActivity(myIntent);
-            }
+        clk.setOnClickListener(v -> {
+            Intent myIntent = new Intent(FullscreenActivity.this, SettingsActivity.class);
+            FullscreenActivity.this.startActivity(myIntent);
         });
-
-        mLocationCallback = new LocationCallback() {
-            /**
-             * This is the callback that is triggered when the
-             * FusedLocationClient updates your location.
-             * @param locationResult The result containing the device location.
-             */
-            @Override
-            public void onLocationResult(LocationResult locationResult) {
-                String newLat;
-                String newLon;
-                String oldLat;
-                String oldLon;
-                if (mTrackingLocation) {
-                    oldLat = LatLon.Lat;
-                    oldLon = LatLon.Lon;
-                    newLat = String.format(Locale.ENGLISH, "%s=%.2f", "lat",locationResult.getLastLocation().getLatitude());
-                    newLon = String.format(Locale.ENGLISH, "%s=%.2f", "lon",locationResult.getLastLocation().getLongitude());
-
-                    boolean wtf = ((newLat.equals(oldLat)) && (newLon.equals(oldLon)));
-                    if (!wtf)  {
-                        LatLon.Lat = newLat;
-                        LatLon.Lon = newLon;
-                        doWeatherNew();
-                    }
-                }
-            }
-        };
-
-        if (!checkPermissions()) {
-            requestPermissions();
-        } else {
-            getLastLocation();
-        }
 
         web = findViewById(webView);
         webEE = findViewById(R.id.webViewEE);
@@ -187,65 +134,10 @@ public class FullscreenActivity extends AppCompatActivity {
             webEE.loadUrl("file:///android_asset/halloween.html");
         }
 
-        startTrackingLocation();
         checkScreenPinning();
         doNews();
         doWebPage();
         showSnackbar(getString(R.string.settings_tip));
-    }
-
-    @SuppressWarnings("MissingPermission")
-    private void getLastLocation() {
-        mFusedLocationClient.getLastLocation()
-                .addOnCompleteListener(this, new OnCompleteListener<Location>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Location> task) {
-                        if (task.isSuccessful() && task.getResult() != null) {
-                            mLastLocation = task.getResult();
-                            String lat = String.format(Locale.ENGLISH, "%s=%.2f", "lat", mLastLocation.getLatitude());
-                            String lon = String.format(Locale.ENGLISH, "%s=%.2f", "lon", mLastLocation.getLongitude());
-                            LatLon.Lat = lat;
-                            LatLon.Lon = lon;
-                            doWeatherNew();
-                        } else {
-                            Log.w(TAG, "getLastLocation:exception", task.getException());
-                            showSnackbar(getString(R.string.no_location_detected));
-                            LatLon.Lat = "";
-                            LatLon.Lon = "";
-                        }
-                    }
-                });
-    }
-
-    private void startTrackingLocation() {
-        if (ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]
-                            {Manifest.permission.ACCESS_FINE_LOCATION},
-                    REQUEST_LOCATION_PERMISSION);
-        } else {
-            mTrackingLocation = true;
-            mFusedLocationClient.requestLocationUpdates
-                    (getLocationRequest(),
-                            mLocationCallback,
-                            null /* Looper */);
-
-        }
-    }
-
-    private void stopTrackingLocation() {
-        if (mTrackingLocation) {
-            mTrackingLocation = false;
-        }
-    }
-
-    private LocationRequest getLocationRequest() {
-        LocationRequest locationRequest = new LocationRequest();
-        locationRequest.setInterval(60000);
-        locationRequest.setFastestInterval(5000);
-        locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-        return locationRequest;
     }
 
     private void showSnackbar(final String text) {
@@ -254,101 +146,6 @@ public class FullscreenActivity extends AppCompatActivity {
             Snackbar.make(container, text, Snackbar.LENGTH_LONG).show();
         }
     }
-
-    private void showSnackbar(final int mainTextStringId, final int actionStringId,
-                              View.OnClickListener listener) {
-        Snackbar.make(findViewById(android.R.id.content),
-                getString(mainTextStringId),
-                Snackbar.LENGTH_INDEFINITE)
-                .setAction(getString(actionStringId), listener).show();
-    }
-
-    private boolean checkPermissions() {
-        int permissionState = ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_COARSE_LOCATION);
-        return permissionState == PackageManager.PERMISSION_GRANTED;
-    }
-
-    private void startLocationPermissionRequest() {
-        ActivityCompat.requestPermissions(FullscreenActivity.this,
-                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                REQUEST_PERMISSIONS_REQUEST_CODE);
-    }
-
-    private void requestPermissions() {
-        boolean shouldProvideRationale =
-                ActivityCompat.shouldShowRequestPermissionRationale(this,
-                        Manifest.permission.ACCESS_COARSE_LOCATION);
-
-        // Provide an additional rationale to the user. This would happen if the user denied the
-        // request previously, but didn't check the "Don't ask again" checkbox.
-        if (shouldProvideRationale) {
-            Log.i(TAG, "Displaying permission rationale to provide additional context.");
-
-            showSnackbar(R.string.permission_rationale, android.R.string.ok,
-                    new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            // Request permission
-                            startLocationPermissionRequest();
-                        }
-                    });
-
-        } else {
-            // Log.i(TAG, "Requesting permission");
-            // Request permission. It's possible this can be auto answered if device policy
-            // sets the permission in a given state or the user denied the permission
-            // previously and checked "Never ask again".
-            startLocationPermissionRequest();
-        }
-    }
-
-    /**
-     * Callback received when a permissions request has been completed.
-     */
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        // Log.i(TAG, "onRequestPermissionResult");
-        if (requestCode == REQUEST_PERMISSIONS_REQUEST_CODE) {
-            if (grantResults.length <= 0) {
-                // If user interaction was interrupted, the permission request is cancelled and you
-                // receive empty arrays.
-                // Log.i(TAG, "User interaction was cancelled.");
-            } else if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission granted.
-                getLastLocation();
-            } else {
-                // Permission denied.
-
-                // Notify the user via a SnackBar that they have rejected a core permission for the
-                // app, which makes the Activity useless. In a real app, core permissions would
-                // typically be best requested during a welcome-screen flow.
-
-                // Additionally, it is important to remember that a permission might have been
-                // rejected without asking the user for permission (device policy or "Never ask
-                // again" prompts). Therefore, a user interface affordance is typically implemented
-                // when permissions are denied. Otherwise, your app could appear unresponsive to
-                // touches or interactions which have required permissions.
-                showSnackbar(R.string.permission_denied_explanation, R.string.settings,
-                        new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                // Build intent that displays the App settings screen.
-                                Intent intent = new Intent();
-                                intent.setAction(
-                                        Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                Uri uri = Uri.fromParts("package",
-                                        BuildConfig.APPLICATION_ID, null);
-                                intent.setData(uri);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                startActivity(intent);
-                            }
-                        });
-            }
-        }
-    }
-
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
@@ -374,33 +171,20 @@ public class FullscreenActivity extends AppCompatActivity {
     private void doWeatherNew() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         final boolean display_weather = sharedPref.getBoolean("weather_switch", true);
-        final boolean display_units_in_degF = sharedPref.getBoolean("units_switch", false);
-        final int weatherFontSize = Integer.parseInt(Objects.requireNonNull(sharedPref.getString("weather_fontsize", "4")));
+
         if (!display_weather) {
             textViewWeather.setVisibility(View.INVISIBLE);
             clearWeather();
         } else {
             textViewWeather.setVisibility(View.VISIBLE);
-            // String location = getLocation();
-            String manLoc = "";
-            String city = "";
+            String manLoc; // = "";
+            String city; // = "";
 
-            final boolean manualLocation = sharedPref.getBoolean("manual_location_switch", false);
-            if (manualLocation) {
-                stopTrackingLocation();
-                manLoc = sharedPref.getString("manual_location", "Glasgow");
-                city = "&q=" + manLoc;
-            } else {
-                startTrackingLocation();
-                if (LatLon.Lat.length() != 0 && LatLon.Lon.length() != 0) {
-                    city = "&" + LatLon.Lat + "&" + LatLon.Lon;
-                } else {
-                    city = "";
-                }
-            }
+            manLoc = sharedPref.getString("manual_location", "Glasgow");
+            city = "&q=" + manLoc;
 
             JSONWeatherTask task = new JSONWeatherTask();
-            String owm_api_key = "";
+            String owm_api_key; // = "";
 
             boolean use_own_api_key = sharedPref.getBoolean("custom_weather_api_key", false);
             if (use_own_api_key) {
@@ -440,7 +224,7 @@ public class FullscreenActivity extends AppCompatActivity {
             super.onPostExecute(weather);
             String weatherIcon = "werror";
             if (weather.currentCondition.getCondition() != null) {
-                int wID = weather.currentCondition.getWeatherId();
+                // int wID = weather.currentCondition.getWeatherId();
                 String wIconId = weather.currentCondition.getIcon();
 
                 weatherIcon = "werror";
@@ -460,44 +244,30 @@ public class FullscreenActivity extends AppCompatActivity {
                             weatherIcon = "partly_cloudy_night";
                             break;
                         case "03d":
-                            weatherIcon = "cloudy";
-                            break;
                         case "03n":
                             weatherIcon = "cloudy";
                             break;
                         case "04d":
-                            weatherIcon = "very_cloudy";
-                            break;
                         case "04n":
                             weatherIcon = "very_cloudy";
                             break;
                         case "09d":
-                            weatherIcon = "rain";
-                            break;
                         case "09n":
                             weatherIcon = "rain";
                             break;
                         case "10d":
-                            weatherIcon = "heavy_rain";
-                            break;
                         case "10n":
                             weatherIcon = "heavy_rain";
                             break;
                         case "11d":
-                            weatherIcon = "thunderstorm";
-                            break;
                         case "11n":
                             weatherIcon = "thunderstorm";
                             break;
                         case "13d":
-                            weatherIcon = "snow";
-                            break;
                         case "13n":
                             weatherIcon = "snow";
                             break;
                         case "50d":
-                            weatherIcon = "fog";
-                            break;
                         case "50n":
                             weatherIcon = "fog";
                             break;
@@ -522,14 +292,12 @@ public class FullscreenActivity extends AppCompatActivity {
                 textViewWeather.setTypeface(null, Typeface.NORMAL);
             }
 
-            String temp = "";
+            String temp; // = "";
             String loc = "";
 
             if (weather.currentCondition.getCondition() != null) {
                 float current_temp = weather.temperature.getTemp();
                 float feels_like = weather.temperature.getFeelsLike();
-                float minTemp = weather.temperature.getMinTemp();
-                float maxTemp = weather.temperature.getMaxTemp();
                 float wSpeedms = weather.wind.getSpeed();
                 double wSpeedmph = wSpeedms * 2.24;
                 double wSpeedkph = wSpeedms * 3.6;
@@ -539,8 +307,6 @@ public class FullscreenActivity extends AppCompatActivity {
                 if (display_units_in_degF) {
                     current_temp = (current_temp * 9 / 5) + 32;
                     feels_like = (feels_like * 9 / 5) + 32;
-                    minTemp = (minTemp * 9 / 5) + 32;
-                    maxTemp = (maxTemp * 9 / 5) + 32;
                     temp_units += "F";
                 } else {
                     temp_units += "C";
@@ -633,14 +399,12 @@ public class FullscreenActivity extends AppCompatActivity {
         autoUpdate.schedule(new TimerTask() {
             @Override
             public void run() {
-                runOnUiThread(new Runnable() {
-                    public void run() {
-                        doWeatherNew();
-                        doNews();
-                        doWebPage();
-                        doEasterEgg();
-                        checkScreenPinning();
-                    }
+                runOnUiThread(() -> {
+                    doWeatherNew();
+                    doNews();
+                    doWebPage();
+                    doEasterEgg();
+                    checkScreenPinning();
                 });
             }
         }, 0, 300000); // update every 5 mins (300000 ms)
@@ -676,10 +440,6 @@ public class FullscreenActivity extends AppCompatActivity {
         String TAG_CHANNEL = "channel";
         String TAG_TITLE = "title";
         String TAG_ITEM = "item";
-        // String TAG_LINK = "link";
-        // String TAG_DESCRIPTION = "description";
-        // String TAG_PUB_DATE = "pubDate";
-        // String TAG_GUID = "guid";
 
         TextView textViewNews = findViewById(R.id.textViewNews);
         String joinedHeadlines;
@@ -751,30 +511,7 @@ public class FullscreenActivity extends AppCompatActivity {
         }
     }
 
-    private void requestFineLocationPermission() {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                Manifest.permission.ACCESS_FINE_LOCATION)) {
-
-            Snackbar.make(mContentView, R.string.permission_fine_location_rationale,
-                    Snackbar.LENGTH_INDEFINITE)
-                    .setAction(R.string.ok, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            ActivityCompat.requestPermissions(FullscreenActivity.this,
-                                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                                    REQUEST_FINE_LOCATION);
-                        }
-                    })
-                    .show();
-        } else {
-
-            // Permission has not been granted yet. Request it directly.
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    REQUEST_FINE_LOCATION);
-        }
-    }
-
-    private class getNews extends AsyncTask<String, Void, String> {
+     private class getNews extends AsyncTask<String, Void, String> {
         String server_response;
         int responseCode;
 
@@ -816,7 +553,7 @@ public class FullscreenActivity extends AppCompatActivity {
             StringBuffer response = new StringBuffer();
             try {
                 reader = new BufferedReader(new InputStreamReader(in));
-                String line = "";
+                String line; // = "";
                 while ((line = reader.readLine()) != null) {
                     response.append(line);
                 }
@@ -879,8 +616,6 @@ public class FullscreenActivity extends AppCompatActivity {
         boolean displayWebpage = sharedPref.getBoolean("display_webpage", false);
         String webPageURL = sharedPref.getString("display_webpage_url", "");
         int webPC = sharedPref.getInt("display_webpage_slider", 5) * 10;
-        int webSC = sharedPref.getInt("display_webpage_scale", 2);
-        // double web_scale = Math.pow(2, (Float.valueOf(webSC) -4) / 2);
         int wIconPC = 100 - webPC;
 
         LinearLayout.LayoutParams webLP = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, webPC);

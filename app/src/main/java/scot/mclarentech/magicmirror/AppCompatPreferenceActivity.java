@@ -6,14 +6,14 @@ import android.preference.PreferenceActivity;
 // import android.support.annotation.LayoutRes;
 import androidx.annotation.LayoutRes;
 // import android.support.annotation.Nullable;
-import androidx.annotation.NonNull;
+// import androidx.annotation.NonNull;
 // import android.support.v7.app.ActionBar;
-import androidx.annotation.Nullable;
+// import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 // import android.support.v7.app.AppCompatDelegate;
 import androidx.appcompat.app.AppCompatDelegate;
 // import android.support.v7.widget.Toolbar;
-import androidx.appcompat.widget.Toolbar;
+// import androidx.appcompat.widget.Toolbar;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,10 +41,6 @@ public abstract class AppCompatPreferenceActivity extends PreferenceActivity {
 
     public ActionBar getSupportActionBar() {
         return getDelegate().getSupportActionBar();
-    }
-
-    public void setSupportActionBar(@Nullable Toolbar toolbar) {
-        getDelegate().setSupportActionBar(toolbar);
     }
 
     @Override

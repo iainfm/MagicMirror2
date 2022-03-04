@@ -4,9 +4,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import scot.mclarentech.magicmirror.Location;
-import scot.mclarentech.magicmirror.Weather;
-
 public class JSONWeatherParser {
 
     public static Weather getWeather(String data) throws JSONException  {
@@ -64,8 +61,7 @@ public class JSONWeatherParser {
 
 
     private static JSONObject getObject(String tagName, JSONObject jObj)  throws JSONException {
-        JSONObject subObj = jObj.getJSONObject(tagName);
-        return subObj;
+        return jObj.getJSONObject(tagName);
     }
 
     private static String getString(String tagName, JSONObject jObj) throws JSONException {

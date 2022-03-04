@@ -11,9 +11,7 @@ public class Location implements Serializable {
     private String country;
     private String city;
 
-    public float getLongitude() {
-        return longitude;
-    }
+    public float getLongitude() { return longitude; }
     public void setLongitude(float longitude) {
         this.longitude = longitude;
     }

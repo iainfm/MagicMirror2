@@ -25,7 +25,6 @@
     <string name="pref_auto_location">Override device\'s location</string>
 
     <string name="pref_title_display_name">Location (format: Town, Country)</string>
-    <string name="pref_auto_location_title">Set location manually</string>
     <string name="pref_weather_lat_long">Dumbarton, Scotland</string>
     <string name="pref_rss_custom_url">https://www.androidauthority.com/android-development/feed/</string>
     <string name="pref_description_rss_feed">Use a custom RSS feed</string>
@@ -38,7 +37,6 @@
     <string name ="rss_checkxport">transport in settings</string>
     <string name="location_error">Location not found</string>
     <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
-    <string name="darksky_api_key">a2473c26e33cdf595533164fc3e19824</string>
     <string name="openweathermap_api_key">170e49c651266a64ef7fd5e526def9d3</string>
     <string name="pref_custom_api_key">Use custom OpenWeather API key</string>
     <string name="custom_api_key">Custom API key</string>
@@ -60,18 +58,6 @@
     <string name="display_webpage_scale_title">Web page display scale</string>
     <string name="display_webpage_url_summary">Include http:// or https://</string>
     <string name="display_webpage_url_title">URL of page to display</string>
-    <!--string-array name="pref_example_list_titles">
-        <item>Always</item>
-        <item>When possible</item>
-        <item>Never</item>
-    </string-array>
-    <string-array name="pref_example_list_values">
-        <item>1</item>
-        <item>0</item>
-        <item>-1</item>
-    </string-array-->
-
-    <!-- Example settings for Data & Sync -->
     <string name="pref_header_data_sync">Data &amp; sync</string>
 
     <string name="pref_title_sync_frequency">Sync frequency</string>

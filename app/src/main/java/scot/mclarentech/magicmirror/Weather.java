@@ -1,7 +1,4 @@
 package scot.mclarentech.magicmirror;
-
-import scot.mclarentech.magicmirror.Location;
-
 /*
  * Copyright (C) 2013 Surviving with Android (http://www.survivingwithandroid.com)
  *
@@ -23,22 +20,24 @@ public class Weather {
     public CurrentCondition currentCondition = new CurrentCondition();
     public Temperature temperature = new Temperature();
     public Wind wind = new Wind();
-    public Rain rain = new Rain();
-    public Snow snow = new Snow()	;
+    // public Rain rain = new Rain();
+    // public Snow snow = new Snow()	;
     public Clouds clouds = new Clouds();
-    public byte[] iconData;
+    // public byte[] iconData;
 
-    public class CurrentCondition {
+    public static class CurrentCondition {
         private int weatherId;
         private String condition;
         private String descr;
         private String icon;
         private float pressure;
         private float humidity;
-
+/*
         public int getWeatherId() {
             return weatherId;
         }
+
+ */
         public void setWeatherId(int weatherId) {
             this.weatherId = weatherId;
         }
@@ -60,15 +59,22 @@ public class Weather {
         public void setIcon(String icon) {
             this.icon = icon;
         }
+
+        /*
         public float getPressure() {
             return pressure;
         }
+
+         */
         public void setPressure(float pressure) {
             this.pressure = pressure;
         }
+        /*
         public float getHumidity() {
             return humidity;
         }
+
+         */
         public void setHumidity(float humidity) {
             this.humidity = humidity;
         }
@@ -88,15 +94,23 @@ public class Weather {
         }
         public float getFeelsLike() {return feels_like;}
         public void setFeelsLike(float feels_like) {this.feels_like = feels_like;}
+
+        /*
         public float getMinTemp() {
             return minTemp;
         }
+         */
+
         public void setMinTemp(float minTemp) {
             this.minTemp = minTemp;
         }
+
+        /*
         public float getMaxTemp() {
             return maxTemp;
         }
+         */
+
         public void setMaxTemp(float maxTemp) {
             this.maxTemp = maxTemp;
         }
@@ -125,20 +139,31 @@ public class Weather {
     public class Rain {
         private String time;
         private float ammount;
+
+        /*
         public String getTime() {
             return time;
         }
+
+
         public void setTime(String time) {
             this.time = time;
         }
+
+
         public float getAmmount() {
             return ammount;
         }
+
+
         public void setAmmount(float ammount) {
             this.ammount = ammount;
         }
+
+         */
     }
 
+    /*
     public class Snow {
         private String time;
         private float ammount;
@@ -156,11 +181,15 @@ public class Weather {
         }
     }
 
+     */
+
     public class Clouds {
         private int perc;
+        /*
         public int getPerc() {
             return perc;
         }
+         */
         public void setPerc(int perc) {
             this.perc = perc;
         }

@@ -34,15 +34,7 @@
         android:summary="@string/pref_description_windspeed_units"
         android:title="@string/pref_title_windspeed_units" />
 
-
-    <SwitchPreference
-        android:defaultValue="false"
-        android:key="manual_location_switch"
-        android:summary="@string/pref_auto_location"
-        android:title="@string/pref_auto_location_title" />
-
     <EditTextPreference
-        android:dependency="manual_location_switch"
         android:defaultValue="@string/pref_weather_lat_long"
         android:inputType="textCapWords"
         android:key="manual_location"
